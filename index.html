@@ -6,10 +6,10 @@
   <title>Song Mingyeong</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Raleway:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&family=Noto+Serif+KR:wght@300;400;500&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── TOKENS ──────────────────────────────── */
+    /* ── TOKENS ─────────────────────────────── */
     :root {
       --paper:    #F9F9F7;
       --taupe:    #EDEBE4;
@@ -19,12 +19,10 @@
       --sage:     #A5B3A1;
       --mauve:    #BFA7B4;
       --line:     #DDD9D0;
-
-      --serif:    'Cormorant Garamond','Noto Serif KR',Georgia,serif;
-      --sans:     'Raleway','Noto Sans KR',sans-serif;
-      --mono:     'IBM Plex Mono',monospace;
-      --ease:     cubic-bezier(0.25,0.46,0.45,0.94);
-      --gap:      clamp(80px,12vw,160px);
+      --serif:    'Cormorant Garamond', Georgia, serif;
+      --sans:     'Raleway', sans-serif;
+      --mono:     'IBM Plex Mono', monospace;
+      --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     [data-theme="dark"] {
       --paper:    #1B1A17;
@@ -36,8 +34,8 @@
     }
 
     /* ── RESET ───────────────────────────────── */
-    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: var(--sans);
       background: var(--paper);
@@ -47,892 +45,534 @@
       overflow-x: hidden;
       transition: background .4s var(--ease), color .4s var(--ease);
     }
-
-    /* Paper grain overlay */
+    /* Grain */
     body::after {
-      content:'';
-      position:fixed; inset:0; z-index:9000; pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-      opacity:.04;
+      content: ''; position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      opacity: .038;
     }
 
-    /* ── LAYOUT ──────────────────────────────── */
-    .wrap { max-width:960px; margin:0 auto; padding:0 48px; }
-
-    /* ── NAVIGATION ──────────────────────────── */
-    #navbar {
-      position:fixed; top:0; left:0; right:0; z-index:500;
-      padding:22px 60px;
-      display:flex; justify-content:space-between; align-items:center;
-      background:rgba(249,249,247,.9); backdrop-filter:blur(14px);
-      border-bottom:1px solid transparent;
-      transition:transform .4s var(--ease), border-color .3s, background .4s;
+    /* ── NAV ─────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 22px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(249, 249, 247, .92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: transform .4s var(--ease), border-color .3s, background .4s;
     }
-    [data-theme="dark"] #navbar { background:rgba(27,26,23,.9); }
-    #navbar.hidden    { transform:translateY(-100%); }
-    #navbar.bordered  { border-bottom-color:var(--line); }
+    [data-theme="dark"] #nav { background: rgba(27, 26, 23, .92); }
+    #nav.up   { transform: translateY(0); }
+    #nav.down { transform: translateY(-100%); }
+    #nav.line { border-bottom-color: var(--line); }
 
     .nav-name {
-      font-family:var(--serif); font-size:1rem; font-weight:500;
-      letter-spacing:.06em; color:var(--charcoal); text-decoration:none;
+      font-family: var(--serif); font-size: 1rem; font-weight: 500;
+      letter-spacing: .06em; color: var(--charcoal); text-decoration: none;
     }
-    .nav-right { display:flex; align-items:center; gap:36px; }
-    .nav-links  { display:flex; gap:32px; list-style:none; }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-links  { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
-      font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
-      color:var(--mid); text-decoration:none; transition:color .2s;
+      font-size: .68rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--mid); text-decoration: none; transition: color .2s;
     }
-    .nav-links a:hover { color:var(--charcoal); }
-
-    .btn-theme {
-      width:30px; height:30px; border:1px solid var(--line); border-radius:50%;
-      background:none; cursor:pointer; color:var(--mid);
-      display:flex; align-items:center; justify-content:center;
-      transition:color .2s, border-color .2s;
+    .nav-links a:hover { color: var(--charcoal); }
+    .btn-mode {
+      width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 50%;
+      background: none; cursor: pointer; color: var(--mid);
+      display: flex; align-items: center; justify-content: center;
+      transition: color .2s, border-color .2s;
     }
-    .btn-theme:hover { color:var(--charcoal); border-color:var(--charcoal); }
-    .btn-theme svg   { width:13px; height:13px; fill:currentColor; }
-    .icon-sun  { display:none; }
-    [data-theme="dark"] .icon-moon { display:none; }
-    [data-theme="dark"] .icon-sun  { display:block; }
+    .btn-mode:hover { color: var(--charcoal); border-color: var(--charcoal); }
+    .btn-mode svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+    .i-sun  { display: none; }
+    [data-theme="dark"] .i-moon { display: none; }
+    [data-theme="dark"] .i-sun  { display: block; }
 
-    /* ── SECTION LABEL ───────────────────────── */
-    .s-label { display:flex; align-items:baseline; gap:14px; margin-bottom:60px; }
-    .s-label__n {
-      font-family:var(--serif); font-size:.85rem; font-style:italic; color:var(--sage);
+    /* ── LAYOUT ──────────────────────────────── */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── REVEAL ──────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .75s var(--ease), transform .75s var(--ease);
     }
-    .s-label__t {
-      font-family:var(--serif); font-size:2.1rem; font-weight:400; letter-spacing:-.01em;
-    }
+    .reveal.vis { opacity: 1; transform: none; }
 
-    /* ── REVEAL ANIMATION ────────────────────── */
-    .reveal { opacity:0; transform:translateY(20px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-    .reveal.vis { opacity:1; transform:none; }
+    /* ── SECTION HEADER ──────────────────────── */
+    .sh { display: flex; align-items: baseline; gap: 14px; margin-bottom: 56px; }
+    .sh__n { font-family: var(--serif); font-size: .82rem; font-style: italic; color: var(--sage); }
+    .sh__t { font-family: var(--serif); font-size: 2rem; font-weight: 400; letter-spacing: -.01em; }
 
-    /* ════════════════════════════════════════════
+    /* ════════════════════════════
        HERO
-    ════════════════════════════════════════════ */
+    ════════════════════════════ */
     #hero {
-      min-height:100svh;
-      display:grid;
-      grid-template-columns:2fr 3fr;
-      align-items:end;
-      padding:0 48px 96px;
-      max-width:960px; margin:0 auto;
+      min-height: 100svh;
+      display: grid; grid-template-columns: 5fr 7fr;
+      align-items: end;
+      padding: 0 48px 96px;
+      max-width: 900px; margin: 0 auto;
     }
-
+    .hero-void { /* empty left */ }
     .hero-body {}
+
     .hero-eyebrow {
-      font-family:var(--mono); font-size:.65rem; letter-spacing:.2em;
-      text-transform:uppercase; color:var(--sage); margin-bottom:22px;
+      font-family: var(--mono); font-size: .62rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--sage); margin-bottom: 20px;
     }
     .hero-name {
-      font-family:var(--serif);
-      font-size:clamp(3.2rem,7.5vw,7rem);
-      font-weight:300; line-height:1; letter-spacing:-.025em;
-      margin-bottom:36px;
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300; line-height: 1; letter-spacing: -.025em;
+      margin-bottom: 32px;
     }
-    .hero-name .italic { font-style:italic; color:var(--mauve); display:block; }
+    .hero-name em { font-style: italic; color: var(--mauve); display: block; }
 
     .hero-desc {
-      max-width:420px; font-size:.875rem; color:var(--mid); line-height:1.9; margin-bottom:48px;
+      max-width: 400px; font-size: .875rem; color: var(--mid); line-height: 1.9; margin-bottom: 44px;
     }
 
     .hero-meta {
-      border-top:1px solid var(--line); padding-top:24px;
-      display:flex; gap:0; max-width:420px;
+      border-top: 1px solid var(--line); padding-top: 22px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
     }
-    .hero-meta-item { flex:1; }
-    .hero-meta-item + .hero-meta-item { border-left:1px solid var(--line); padding-left:20px; }
-    .hero-meta-item__k {
-      font-family:var(--mono); font-size:.58rem; letter-spacing:.14em;
-      text-transform:uppercase; color:var(--light); display:block; margin-bottom:4px;
+    .meta-item { }
+    .meta-item + .meta-item { border-left: 1px solid var(--line); padding-left: 18px; }
+    .meta-item__k {
+      font-family: var(--mono); font-size: .57rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--light); display: block; margin-bottom: 3px;
     }
-    .hero-meta-item__v { font-size:.78rem; }
+    .meta-item__v { font-size: .77rem; color: var(--charcoal); }
 
-    .scroll-hint {
-      display:flex; flex-direction:column; align-items:center; gap:6px;
-      color:var(--light); position:absolute; bottom:40px; left:50%; transform:translateX(-50%);
+    .scroll-line {
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      color: var(--light); position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
     }
-    .scroll-hint__line {
-      width:1px; height:44px;
-      background:linear-gradient(to bottom, transparent, var(--line));
-      animation:pulse-line 1.8s var(--ease) infinite;
+    .scroll-line__bar {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, transparent, var(--line));
+      animation: sline 1.9s var(--ease) infinite;
     }
-    .scroll-hint__label {
-      font-family:var(--mono); font-size:.55rem; letter-spacing:.2em;
-      text-transform:uppercase; writing-mode:vertical-lr;
+    .scroll-line__txt {
+      font-family: var(--mono); font-size: .52rem; letter-spacing: .2em;
+      text-transform: uppercase; writing-mode: vertical-lr;
     }
-    @keyframes pulse-line {
-      0%   { transform:scaleY(0); transform-origin:top; }
-      50%  { transform:scaleY(1); transform-origin:top; }
-      50.1%{ transform:scaleY(1); transform-origin:bottom; }
-      100% { transform:scaleY(0); transform-origin:bottom; }
-    }
-
-    /* ════════════════════════════════════════════
-       RESEARCH INTERESTS
-    ════════════════════════════════════════════ */
-    #interests { border-top:1px solid var(--line); padding:var(--gap) 0; }
-
-    .interests-list { border-top:1px solid var(--line); }
-
-    .interest-row {
-      display:grid; grid-template-columns:56px 1fr;
-      gap:40px; padding:36px 0; border-bottom:1px solid var(--line);
-      transition:opacity .2s;
-    }
-    .interests-list:hover .interest-row       { opacity:.35; }
-    .interests-list:hover .interest-row:hover { opacity:1; }
-
-    .interest-row__n {
-      font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; color:var(--light); padding-top:8px;
-    }
-    .interest-row__title {
-      font-family:var(--serif); font-size:clamp(1.5rem,2.8vw,2.2rem);
-      font-weight:400; line-height:1.2; margin-bottom:10px;
-    }
-    .interest-row__desc {
-      font-size:.82rem; color:var(--mid); line-height:1.85; max-width:500px;
-    }
-    .interest-row__tag {
-      display:inline-block; margin-top:14px;
-      font-family:var(--mono); font-size:.57rem; letter-spacing:.1em; text-transform:uppercase;
-      color:var(--sage); border:1px solid rgba(165,179,161,.5); border-radius:2px; padding:2px 8px;
+    @keyframes sline {
+      0%    { transform: scaleY(0); transform-origin: top; }
+      49%   { transform: scaleY(1); transform-origin: top; }
+      50%   { transform: scaleY(1); transform-origin: bottom; }
+      100%  { transform: scaleY(0); transform-origin: bottom; }
     }
 
-    /* ════════════════════════════════════════════
-       CURRENT RESEARCH  (sticky left)
-    ════════════════════════════════════════════ */
-    #research { border-top:1px solid var(--line); padding:var(--gap) 0; }
+    /* ════════════════════════════
+       ABOUT
+    ════════════════════════════ */
+    #about { border-top: 1px solid var(--line); padding: clamp(80px, 12vw, 160px) 0; }
 
-    .research-layout { display:grid; grid-template-columns:1fr 1.7fr; gap:72px; align-items:start; }
-    .research-sticky { position:sticky; top:112px; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 72px; align-items: start; }
+    .about-left h3 {
+      font-family: var(--serif); font-size: 1.4rem; font-weight: 500;
+      line-height: 1.4; margin-bottom: 14px;
+    }
+    .about-left p { font-size: .83rem; color: var(--mid); line-height: 1.9; }
+    .about-right p { font-size: .875rem; color: var(--mid); line-height: 2; margin-bottom: 16px; }
 
-    .research-sticky__kicker {
-      font-family:var(--mono); font-size:.6rem; letter-spacing:.18em;
-      text-transform:uppercase; color:var(--mauve); margin-bottom:18px;
-    }
-    .research-sticky__title {
-      font-family:var(--serif); font-size:1.55rem; font-weight:400; line-height:1.35; margin-bottom:18px;
-    }
-    .research-sticky__body {
-      font-size:.83rem; color:var(--mid); line-height:1.9; margin-bottom:24px;
-    }
-    .research-sticky__box {
-      border:1px solid var(--line); border-radius:2px; background:var(--taupe); padding:18px 20px;
-    }
-    .research-sticky__box-k {
-      font-family:var(--mono); font-size:.57rem; letter-spacing:.14em;
-      text-transform:uppercase; color:var(--light); margin-bottom:6px;
-    }
-    .research-sticky__box-v { font-size:.78rem; color:var(--mid); line-height:1.75; }
+    /* ════════════════════════════
+       INTERESTS
+    ════════════════════════════ */
+    #interests { border-top: 1px solid var(--line); padding: clamp(80px, 12vw, 160px) 0; }
 
-    .research-items { display:flex; flex-direction:column; gap:44px; }
+    .int-list { border-top: 1px solid var(--line); }
+    .int-row {
+      display: grid; grid-template-columns: 48px 1fr; gap: 36px;
+      padding: 32px 0; border-bottom: 1px solid var(--line);
+      transition: opacity .2s;
+    }
+    .int-list:hover .int-row       { opacity: .35; }
+    .int-list:hover .int-row:hover { opacity: 1; }
+    .int-row__n {
+      font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; color: var(--light); padding-top: 7px;
+    }
+    .int-row__title {
+      font-family: var(--serif); font-size: clamp(1.4rem, 2.6vw, 2rem);
+      font-weight: 400; line-height: 1.2; margin-bottom: 8px;
+    }
+    .int-row__desc { font-size: .81rem; color: var(--mid); line-height: 1.85; max-width: 480px; }
 
-    .r-card { border-top:1px solid var(--line); padding-top:28px; }
-    .r-card__phase {
-      font-family:var(--mono); font-size:.58rem; letter-spacing:.14em;
-      text-transform:uppercase; color:var(--light); margin-bottom:10px;
-    }
-    .r-card__title {
-      font-family:var(--serif); font-size:1.15rem; font-weight:400; line-height:1.4; margin-bottom:10px;
-    }
-    .r-card__desc { font-size:.81rem; color:var(--mid); line-height:1.85; margin-bottom:18px; }
-    .r-card__vis {
-      height:100px; border-radius:2px; background:var(--taupe); overflow:hidden; position:relative;
-    }
-    /* geometric abstractions */
-    .r-card__vis--a::before {
-      content:''; position:absolute;
-      width:72px; height:72px; top:14px; left:24px;
-      border-radius:50%; border:1px solid rgba(165,179,161,.45);
-      background:rgba(165,179,161,.1);
-    }
-    .r-card__vis--a::after {
-      content:''; position:absolute;
-      width:44px; height:44px; top:28px; left:38px;
-      border-radius:50%; border:1px solid rgba(165,179,161,.3);
-      background:rgba(165,179,161,.14);
-    }
-    .r-card__vis--b::before {
-      content:''; position:absolute;
-      width:100%; height:1px; top:50%;
-      background:rgba(191,167,180,.3);
-    }
-    .r-card__vis--b::after {
-      content:''; position:absolute;
-      width:40px; height:40px; top:50%; left:50%;
-      transform:translate(-50%,-50%);
-      border:1px solid rgba(191,167,180,.4);
-    }
-
-    /* ════════════════════════════════════════════
-       PROJECTS
-    ════════════════════════════════════════════ */
-    #projects { border-top:1px solid var(--line); padding:var(--gap) 0; }
-
-    .projects-list { display:flex; flex-direction:column; gap:72px; }
-
-    .p-case { display:grid; grid-template-columns:1fr 1.9fr; gap:44px; align-items:start; }
-
-    .p-case__img {
-      aspect-ratio:4/3; border-radius:2px; overflow:hidden; position:relative;
-      background:var(--taupe);
-    }
-    .p-case__img--1 {
-      background:linear-gradient(150deg,#EDEBE4 0%,#DDD9D0 100%);
-    }
-    .p-case__img--1::after {
-      content:''; position:absolute; inset:0;
-      background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(165,179,161,.13) 28px,rgba(165,179,161,.13) 29px);
-    }
-    .p-case__img--2 {
-      background:linear-gradient(150deg,#EAE5DE 0%,#D8D3CC 100%);
-    }
-    .p-case__img--2::after {
-      content:''; position:absolute; inset:0;
-      background:radial-gradient(circle at 35% 55%, rgba(191,167,180,.2) 0%, transparent 60%);
-    }
-
-    .p-case__meta { display:flex; gap:10px; align-items:center; margin-bottom:14px; }
-    .p-case__year {
-      font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; color:var(--light);
-    }
-    .p-case__tag {
-      font-family:var(--mono); font-size:.57rem; letter-spacing:.08em; text-transform:uppercase;
-      color:var(--mauve); border:1px solid rgba(191,167,180,.4); border-radius:2px; padding:2px 8px;
-    }
-    .p-case__title {
-      font-family:var(--serif); font-size:1.45rem; font-weight:400; line-height:1.35; margin-bottom:14px;
-    }
-    .p-case__desc { font-size:.82rem; color:var(--mid); line-height:1.85; margin-bottom:16px; }
-    .p-case__finding {
-      border-left:2px solid var(--sage); padding-left:16px; margin-bottom:18px;
-    }
-    .p-case__finding-k {
-      font-family:var(--mono); font-size:.56rem; letter-spacing:.14em; text-transform:uppercase;
-      color:var(--sage); margin-bottom:5px;
-    }
-    .p-case__finding-v { font-size:.8rem; color:var(--mid); line-height:1.7; font-style:italic; }
-    .p-case__link {
-      display:inline-flex; align-items:center; gap:6px;
-      font-family:var(--mono); font-size:.63rem; letter-spacing:.12em; text-transform:uppercase;
-      color:var(--charcoal); text-decoration:none;
-      border-bottom:1px solid var(--line); padding-bottom:2px; transition:color .2s, border-color .2s;
-    }
-    .p-case__link:hover { color:var(--mauve); border-color:var(--mauve); }
-
-    /* ════════════════════════════════════════════
-       PUBLICATIONS
-    ════════════════════════════════════════════ */
-    #publications {
-      border-top:1px solid var(--line); padding:var(--gap) 0;
-      background:var(--taupe);
-      margin:0 -9999px; padding-left:9999px; padding-right:9999px;
-    }
-    #publications .wrap { /* contained */ }
-
-    .pub-list { border-top:1px solid var(--line); }
-
-    .pub-item { padding:28px 0; border-bottom:1px solid var(--line); }
-
-    .pub-item__row {
-      display:grid; grid-template-columns:90px 1fr auto; gap:20px; align-items:baseline;
-    }
-    .pub-item__year {
-      font-family:var(--mono); font-size:.65rem; letter-spacing:.1em; color:var(--light);
-    }
-    .pub-item__title {
-      font-family:var(--serif); font-size:1.05rem; font-weight:400; line-height:1.45;
-      transition:color .2s; cursor:pointer;
-    }
-    .pub-item:hover .pub-item__title { color:var(--mauve); }
-    .pub-item__type {
-      font-family:var(--mono); font-size:.56rem; letter-spacing:.1em; text-transform:uppercase;
-      color:var(--sage); white-space:nowrap;
-    }
-    .pub-item__venue {
-      font-size:.76rem; color:var(--mid); font-style:italic; padding-left:110px; margin-top:5px;
-    }
-
-    .pub-abstract {
-      max-height:0; overflow:hidden; opacity:0;
-      transition:max-height .5s var(--ease), opacity .4s;
-      padding-left:110px;
-    }
-    .pub-item.open .pub-abstract { max-height:240px; opacity:1; }
-    .pub-abstract__text {
-      font-size:.8rem; color:var(--mid); line-height:1.85; padding-top:14px; max-width:560px;
-    }
-    .pub-toggle {
-      display:flex; align-items:center; gap:6px; margin-top:8px; padding-left:110px;
-      font-family:var(--mono); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase;
-      color:var(--light); background:none; border:none; cursor:pointer; transition:color .2s;
-    }
-    .pub-toggle:hover { color:var(--mauve); }
-    .pub-toggle__icon { transition:transform .3s var(--ease); display:inline-block; }
-    .pub-item.open .pub-toggle__icon { transform:rotate(45deg); }
-
-    /* ════════════════════════════════════════════
+    /* ════════════════════════════
        SKILLS
-    ════════════════════════════════════════════ */
-    #skills { border-top:1px solid var(--line); padding:var(--gap) 0; }
+    ════════════════════════════ */
+    #skills { border-top: 1px solid var(--line); padding: clamp(80px, 12vw, 160px) 0; }
 
-    .skills-note {
-      max-width:520px; font-size:.875rem; color:var(--mid); line-height:1.9; margin-bottom:60px;
+    .sk-groups { display: flex; flex-direction: column; gap: 36px; }
+    .sk-group__k {
+      font-family: var(--mono); font-size: .57rem; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--light); margin-bottom: 14px;
     }
+    .sk-group__v {
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 2px; line-height: 1.1;
+    }
+    .sk-xl { font-family: var(--serif); font-size: 2.6rem; font-weight: 300; color: var(--charcoal); }
+    .sk-lg { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; color: var(--charcoal); }
+    .sk-md { font-family: var(--sans); font-size: 1rem; font-weight: 400; color: var(--mid); }
+    .sk-sm { font-family: var(--sans); font-size: .78rem; font-weight: 300; color: var(--light); }
+    .sk-sep { color: var(--line); margin: 0 6px; font-weight: 300; }
 
-    .skill-group { margin-bottom:40px; }
-    .skill-group__k {
-      font-family:var(--mono); font-size:.58rem; letter-spacing:.16em; text-transform:uppercase;
-      color:var(--light); margin-bottom:14px;
-    }
-    .skill-group__v {
-      display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 2px; line-height:1.15;
-    }
-    .sk-xl { font-family:var(--serif); font-size:2.8rem; font-weight:300; color:var(--charcoal); }
-    .sk-lg { font-family:var(--serif); font-size:2rem; font-weight:300; color:var(--charcoal); }
-    .sk-md { font-family:var(--sans); font-size:1.1rem; font-weight:400; color:var(--mid); }
-    .sk-sm { font-family:var(--sans); font-size:.82rem; font-weight:300; color:var(--light); }
-    .sk-sep { color:var(--line); font-weight:300; margin:0 4px; font-size:.9rem; }
-
-    /* ════════════════════════════════════════════
+    /* ════════════════════════════
        CONTACT
-    ════════════════════════════════════════════ */
+    ════════════════════════════ */
     #contact {
-      border-top:1px solid var(--line);
-      padding:var(--gap) 0 calc(var(--gap)*1.4);
-      text-align:center;
+      border-top: 1px solid var(--line);
+      padding: clamp(80px, 12vw, 160px) 0 clamp(100px, 15vw, 200px);
+      text-align: center;
     }
     .contact-pre {
-      font-family:var(--mono); font-size:.6rem; letter-spacing:.2em; text-transform:uppercase;
-      color:var(--light); margin-bottom:28px;
+      font-family: var(--mono); font-size: .58rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--light); margin-bottom: 28px;
     }
     .contact-email {
-      display:inline-block;
-      font-family:var(--serif); font-size:clamp(2rem,5.5vw,5rem); font-weight:300;
-      letter-spacing:-.025em; color:var(--charcoal); text-decoration:none; line-height:1;
-      margin-bottom:44px; position:relative;
+      display: inline-block;
+      font-family: var(--serif); font-size: clamp(1.8rem, 5vw, 4.5rem);
+      font-weight: 300; letter-spacing: -.02em; color: var(--charcoal);
+      text-decoration: none; line-height: 1; margin-bottom: 40px; position: relative;
     }
     .contact-email::after {
-      content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px;
-      background:var(--charcoal); transform:scaleX(0); transform-origin:right;
-      transition:transform .4s var(--ease);
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px;
+      background: var(--charcoal);
+      transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease);
     }
-    .contact-email:hover::after { transform:scaleX(1); transform-origin:left; }
+    .contact-email:hover::after { transform: scaleX(1); transform-origin: left; }
 
-    .contact-socials {
-      display:flex; justify-content:center; gap:28px; margin-bottom:44px;
+    .contact-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; }
+    .contact-links a {
+      font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--mid); text-decoration: none; transition: color .2s;
     }
-    .contact-socials a {
-      font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
-      color:var(--mid); text-decoration:none; transition:color .2s;
-    }
-    .contact-socials a:hover { color:var(--charcoal); }
+    .contact-links a:hover { color: var(--charcoal); }
 
     .btn-cv {
-      display:inline-flex; align-items:center; gap:10px;
-      font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
-      color:var(--charcoal); text-decoration:none;
-      border:1px solid var(--line); padding:11px 28px; border-radius:1px;
-      transition:border-color .2s;
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--charcoal); text-decoration: none;
+      border: 1px solid var(--line); padding: 11px 26px; border-radius: 1px;
+      transition: border-color .2s;
     }
-    .btn-cv:hover { border-color:var(--charcoal); }
+    .btn-cv:hover { border-color: var(--charcoal); }
 
-    /* ════════════════════════════════════════════
-       FOOTER
-    ════════════════════════════════════════════ */
+    /* ── FOOTER ──────────────────────────────── */
     footer {
-      border-top:1px solid var(--line); padding:28px 48px;
-      display:flex; justify-content:space-between; align-items:center;
-      max-width:960px; margin:0 auto;
+      border-top: 1px solid var(--line); padding: 26px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 900px; margin: 0 auto;
     }
-    footer p {
-      font-family:var(--mono); font-size:.6rem; letter-spacing:.08em; color:var(--light);
-    }
+    footer p { font-family: var(--mono); font-size: .58rem; letter-spacing: .08em; color: var(--light); }
 
-    /* ════════════════════════════════════════════
-       COOKIE BANNER (ethical — no dark patterns)
-    ════════════════════════════════════════════ */
+    /* ── COOKIE ──────────────────────────────── */
     #cookie {
-      position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-      z-index:8000; background:var(--paper); border:1px solid var(--line); border-radius:2px;
-      padding:20px 22px; max-width:460px; width:calc(100% - 40px);
-      box-shadow:0 4px 20px rgba(0,0,0,.06);
-      transition:background .4s;
+      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+      z-index: 8000; background: var(--paper); border: 1px solid var(--line);
+      border-radius: 2px; padding: 18px 20px; max-width: 440px; width: calc(100% - 36px);
+      box-shadow: 0 4px 18px rgba(0,0,0,.05); transition: background .4s;
     }
-    #cookie.hidden { display:none; }
-    .cookie-title { font-family:var(--serif); font-size:.95rem; font-weight:500; margin-bottom:8px; }
-    .cookie-text  { font-size:.76rem; color:var(--mid); line-height:1.7; margin-bottom:14px; }
-    .cookie-actions { display:flex; gap:10px; }
-    .cookie-btn {
-      font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase;
-      padding:8px 18px; border-radius:1px; cursor:pointer; transition:all .2s;
+    #cookie.hidden { display: none; }
+    .cookie-title { font-family: var(--serif); font-size: .9rem; font-weight: 500; margin-bottom: 6px; }
+    .cookie-text  { font-size: .74rem; color: var(--mid); line-height: 1.65; margin-bottom: 12px; }
+    .cookie-row   { display: flex; gap: 9px; }
+    .cbtn {
+      font-family: var(--mono); font-size: .56rem; letter-spacing: .12em; text-transform: uppercase;
+      padding: 7px 16px; border-radius: 1px; cursor: pointer; transition: all .2s;
     }
-    .cookie-btn--accept { background:var(--charcoal); color:var(--paper); border:1px solid var(--charcoal); }
-    .cookie-btn--accept:hover { opacity:.85; }
-    .cookie-btn--decline { background:none; color:var(--mid); border:1px solid var(--line); }
-    .cookie-btn--decline:hover { border-color:var(--mid); color:var(--charcoal); }
+    .cbtn--ok { background: var(--charcoal); color: var(--paper); border: 1px solid var(--charcoal); }
+    .cbtn--ok:hover { opacity: .82; }
+    .cbtn--no { background: none; color: var(--mid); border: 1px solid var(--line); }
+    .cbtn--no:hover { border-color: var(--mid); color: var(--charcoal); }
 
     /* ── RESPONSIVE ──────────────────────────── */
-    @media (max-width:768px) {
-      #navbar   { padding:18px 20px; }
-      .nav-links{ gap:18px; }
-      .wrap, #hero, footer { padding-left:22px; padding-right:22px; }
-      #hero { grid-template-columns:1fr; padding-top:100px; }
-      .hero-meta { flex-direction:column; gap:16px; }
-      .hero-meta-item + .hero-meta-item { border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:14px; }
-      .interest-row { grid-template-columns:36px 1fr; gap:16px; }
-      .research-layout { grid-template-columns:1fr; }
-      .research-sticky  { position:static; }
-      .p-case { grid-template-columns:1fr; }
-      .pub-item__row { grid-template-columns:1fr auto; }
-      .pub-item__year { display:none; }
-      .pub-item__venue,.pub-abstract,.pub-toggle { padding-left:0; }
+    @media (max-width: 720px) {
+      #nav  { padding: 18px 20px; }
+      .nav-links { gap: 16px; }
+      .wrap, #hero, footer { padding-left: 22px; padding-right: 22px; }
+      #hero { grid-template-columns: 1fr; padding-top: 96px; }
+      .hero-meta { grid-template-columns: 1fr; gap: 14px; }
+      .meta-item + .meta-item { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 12px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .int-row { grid-template-columns: 32px 1fr; gap: 16px; }
     }
   </style>
 </head>
-
 <body>
 
-<!-- ── COOKIE BANNER ──────────────────────────── -->
+<!-- COOKIE -->
 <div id="cookie">
   <p class="cookie-title">On data collection</p>
-  <p class="cookie-text">This site does not use tracking cookies. Only essential cookies necessary for the page to function are active by default.</p>
-  <div class="cookie-actions">
-    <button class="cookie-btn cookie-btn--accept" onclick="closeCookie()">Understood</button>
-    <button class="cookie-btn cookie-btn--decline" onclick="closeCookie()">Dismiss</button>
+  <p class="cookie-text">No tracking cookies. Only essential functionality is active.</p>
+  <div class="cookie-row">
+    <button class="cbtn cbtn--ok" onclick="closeCookie()">Understood</button>
+    <button class="cbtn cbtn--no" onclick="closeCookie()">Dismiss</button>
   </div>
 </div>
 
-<!-- ── NAV ───────────────────────────────────── -->
-<nav id="navbar">
+<!-- NAV -->
+<nav id="nav">
   <a href="#hero" class="nav-name">Song Mingyeong</a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="#interests">Research</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#publications">Publications</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#interests">Interests</a></li>
+      <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="btn-theme" onclick="toggleTheme()" aria-label="Toggle theme">
-      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
-      <svg class="icon-sun"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/></svg>
+    <button class="btn-mode" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
+      <svg class="i-sun"  viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1"  x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22"   x2="5.64"  y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1"  y1="12" x2="3"  y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
+        <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+      </svg>
     </button>
   </div>
 </nav>
 
-<!-- ════════════════════════════════════════════
-     HERO
-════════════════════════════════════════════ -->
+<!-- ════ HERO ════ -->
 <section id="hero">
-  <div><!-- intentional void --></div>
+  <div class="hero-void"></div>
   <div class="hero-body">
-    <p class="hero-eyebrow">Researcher &amp; Frontend Developer</p>
+    <p class="hero-eyebrow">HCI Researcher</p>
     <h1 class="hero-name">
       Song<br>
-      <span class="italic">Mingyeong.</span>
+      <em>Mingyeong.</em>
     </h1>
     <p class="hero-desc">
-      Political Science &amp; International Relations × Data Science × HCI.<br>
-      Researching how interface design structures consent, agency, and responsibility.
+      Political Science &amp; International Relations × Data Science.<br>
+      Interested in how interfaces shape consent, agency, and human decision-making.
     </p>
     <div class="hero-meta">
-      <div class="hero-meta-item">
-        <span class="hero-meta-item__k">Affiliation</span>
-        <span class="hero-meta-item__v">HCI Research Lab</span>
+      <div class="meta-item">
+        <span class="meta-item__k">Affiliation</span>
+        <span class="meta-item__v">HCI Research Lab</span>
       </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-item__k">Major</span>
-        <span class="hero-meta-item__v">Political Science &amp; IR</span>
+      <div class="meta-item">
+        <span class="meta-item__k">Major</span>
+        <span class="meta-item__v">Political Science &amp; IR</span>
       </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-item__k">2nd Major</span>
-        <span class="hero-meta-item__v">Data Science</span>
+      <div class="meta-item">
+        <span class="meta-item__k">2nd Major</span>
+        <span class="meta-item__v">Data Science</span>
       </div>
     </div>
   </div>
-  <div class="scroll-hint" aria-hidden="true">
-    <div class="scroll-hint__line"></div>
-    <span class="scroll-hint__label">scroll</span>
+  <div class="scroll-line" aria-hidden="true">
+    <div class="scroll-line__bar"></div>
+    <span class="scroll-line__txt">scroll</span>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════
-     RESEARCH INTERESTS
-════════════════════════════════════════════ -->
 <div class="wrap">
-<section id="interests">
-  <div class="s-label reveal">
-    <span class="s-label__n">01.</span>
-    <h2 class="s-label__t">Research Interests</h2>
+
+<!-- ════ ABOUT ════ -->
+<section id="about">
+  <div class="sh reveal">
+    <span class="sh__n">01.</span>
+    <h2 class="sh__t">About</h2>
   </div>
-
-  <div class="interests-list">
-
-    <div class="interest-row reveal">
-      <span class="interest-row__n">01</span>
-      <div>
-        <h3 class="interest-row__title">Privacy UX</h3>
-        <p class="interest-row__desc">
-          Cookie consent interfaces, notice-and-choice models, and the structural conditions
-          under which users are led to disclose more than they intend.
-        </p>
-        <span class="interest-row__tag">Cookie Consent · Dark Patterns · GDPR</span>
-      </div>
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <h3>Where politics meets<br>interface design.</h3>
+      <p>Studying at the intersection of social systems, data, and human-computer interaction.</p>
     </div>
-
-    <div class="interest-row reveal">
-      <span class="interest-row__n">02</span>
-      <div>
-        <h3 class="interest-row__title">Illusion of Control</h3>
-        <p class="interest-row__desc">
-          How UI affordances manufacture perceived agency without granting
-          actual influence — in algorithmic feeds, settings panels, and consent flows.
-        </p>
-        <span class="interest-row__tag">Behavioral Interface Design · Perceived Agency</span>
-      </div>
-    </div>
-
-    <div class="interest-row reveal">
-      <span class="interest-row__n">03</span>
-      <div>
-        <h3 class="interest-row__title">AI-Assisted Decision Making</h3>
-        <p class="interest-row__desc">
-          Interface design in systems where AI recommends or decides —
-          how UI framing shifts moral accountability away from the user.
-        </p>
-        <span class="interest-row__tag">Human-AI Interaction · Accountability · UX Ethics</span>
-      </div>
-    </div>
-
-    <div class="interest-row reveal">
-      <span class="interest-row__n">04</span>
-      <div>
-        <h3 class="interest-row__title">Human-AI Alignment</h3>
-        <p class="interest-row__desc">
-          The role of interface design in shaping how users form mental models
-          of AI systems — and where alignment between intent and behavior breaks down.
-        </p>
-        <span class="interest-row__tag">Mental Models · Alignment · Trust Calibration</span>
-      </div>
-    </div>
-
-    <div class="interest-row reveal">
-      <span class="interest-row__n">05</span>
-      <div>
-        <h3 class="interest-row__title">Sustainability-Related UX Fatigue</h3>
-        <p class="interest-row__desc">
-          When eco-UX features produce disengagement rather than behavioral change —
-          the role of interface friction, emotional tone, and decision load.
-        </p>
-        <span class="interest-row__tag">Sustainable UX · Fatigue · Green Tech</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     CURRENT RESEARCH
-════════════════════════════════════════════ -->
-<section id="research">
-  <div class="s-label reveal">
-    <span class="s-label__n">02.</span>
-    <h2 class="s-label__t">Current Research</h2>
-  </div>
-
-  <div class="research-layout">
-    <!-- Sticky left -->
-    <div class="research-sticky reveal">
-      <p class="research-sticky__kicker">Ongoing · HCI Lab</p>
-      <h3 class="research-sticky__title">
-        Privacy UX &amp;<br>Interface Control
-      </h3>
-      <p class="research-sticky__body">
-        Two parallel studies examining how cookie consent design shapes user behavior,
-        and how UI affordances generate perceived — but not actual — agency.
+    <div class="about-right reveal">
+      <p>
+        I came to HCI research through political science — specifically, how systems are designed
+        to shape behavior. Digital interfaces operate on similar logics: structuring choice,
+        diffusing responsibility, manufacturing consent.
       </p>
-      <div class="research-sticky__box">
-        <p class="research-sticky__box-k">Methodology</p>
-        <p class="research-sticky__box-v">
-          User experiments · Behavioral logging ·
-          Comparative interface testing · Regulatory analysis
-        </p>
-      </div>
-    </div>
-
-    <!-- Scrollable right -->
-    <div class="research-items">
-
-      <div class="r-card reveal">
-        <p class="r-card__phase">Study 01 · 2024–2025</p>
-        <h4 class="r-card__title">
-          Cookie Consent as Performance: Autonomy, Dark Patterns,
-          and the Limits of Notice
-        </h4>
-        <p class="r-card__desc">
-          Empirical study examining how consent interfaces direct behavior
-          toward data collection while presenting the appearance of user control.
-          Regulatory framework analysis + user testing (40+ participants).
-        </p>
-        <div class="r-card__vis r-card__vis--a"></div>
-      </div>
-
-      <div class="r-card reveal">
-        <p class="r-card__phase">Study 02 · 2025</p>
-        <h4 class="r-card__title">
-          The Illusion of Control: How UI Affordances
-          Construct False Agency
-        </h4>
-        <p class="r-card__desc">
-          Investigates mechanisms by which interface design creates perceived
-          control that does not correspond to actual system influence.
-          Focus on algorithmic feeds and AI-mediated environments.
-        </p>
-        <div class="r-card__vis r-card__vis--b"></div>
-      </div>
-
+      <p>
+        I'm currently affiliated with an HCI research lab, pursuing a double major
+        in Political Science &amp; International Relations and Data Science.
+        My research interests sit at the boundary of privacy, behavioral interface design,
+        and human-AI interaction.
+      </p>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════
-     PROJECTS
-════════════════════════════════════════════ -->
-<section id="projects">
-  <div class="s-label reveal">
-    <span class="s-label__n">03.</span>
-    <h2 class="s-label__t">Projects</h2>
+<!-- ════ INTERESTS ════ -->
+<section id="interests">
+  <div class="sh reveal">
+    <span class="sh__n">02.</span>
+    <h2 class="sh__t">Research Interests</h2>
   </div>
+  <div class="int-list">
 
-  <div class="projects-list">
-
-    <div class="p-case reveal">
-      <div class="p-case__img p-case__img--1"></div>
+    <div class="int-row reveal">
+      <span class="int-row__n">01</span>
       <div>
-        <div class="p-case__meta">
-          <span class="p-case__year">2025</span>
-          <span class="p-case__tag">Experimental Interface</span>
-        </div>
-        <h3 class="p-case__title">[Project title — add here]</h3>
-        <p class="p-case__desc">
-          [Brief description of the project. What was the goal?
-          What interface did you build and for what research purpose?]
+        <h3 class="int-row__title">Privacy UX</h3>
+        <p class="int-row__desc">
+          Cookie consent interfaces, notice-and-choice models, and the conditions
+          under which users are guided to disclose more than intended.
         </p>
-        <div class="p-case__finding">
-          <p class="p-case__finding-k">Behavioral Finding</p>
-          <p class="p-case__finding-v">[Key finding from user testing or data analysis.]</p>
-        </div>
-        <a href="#" class="p-case__link">View Case Study ↗</a>
       </div>
     </div>
 
-    <div class="p-case reveal">
-      <div class="p-case__img p-case__img--2"></div>
+    <div class="int-row reveal">
+      <span class="int-row__n">02</span>
       <div>
-        <div class="p-case__meta">
-          <span class="p-case__year">2024</span>
-          <span class="p-case__tag">Data Visualization</span>
-        </div>
-        <h3 class="p-case__title">[Project title — add here]</h3>
-        <p class="p-case__desc">
-          [Brief description of the project. What was the research question?
-          What did you build with R / D3.js / React?]
+        <h3 class="int-row__title">Illusion of Control</h3>
+        <p class="int-row__desc">
+          How UI affordances manufacture perceived agency without granting
+          actual influence — in feeds, settings panels, and consent flows.
         </p>
-        <div class="p-case__finding">
-          <p class="p-case__finding-k">Behavioral Finding</p>
-          <p class="p-case__finding-v">[Key finding from the analysis.]</p>
-        </div>
-        <a href="#" class="p-case__link">View Case Study ↗</a>
+      </div>
+    </div>
+
+    <div class="int-row reveal">
+      <span class="int-row__n">03</span>
+      <div>
+        <h3 class="int-row__title">AI-Assisted Decision Making</h3>
+        <p class="int-row__desc">
+          Interface design in AI-augmented systems, and how UI framing
+          shifts moral accountability between human and machine.
+        </p>
+      </div>
+    </div>
+
+    <div class="int-row reveal">
+      <span class="int-row__n">04</span>
+      <div>
+        <h3 class="int-row__title">Human-AI Alignment</h3>
+        <p class="int-row__desc">
+          How users form mental models of AI systems through interface interaction —
+          and where alignment between intent and behavior breaks down.
+        </p>
+      </div>
+    </div>
+
+    <div class="int-row reveal">
+      <span class="int-row__n">05</span>
+      <div>
+        <h3 class="int-row__title">Sustainability-Related UX Fatigue</h3>
+        <p class="int-row__desc">
+          When eco-UX features produce disengagement rather than behavioral change,
+          and the role of interface friction and emotional tone.
+        </p>
       </div>
     </div>
 
   </div>
 </section>
-</div><!-- /wrap -->
 
-<!-- ════════════════════════════════════════════
-     PUBLICATIONS
-════════════════════════════════════════════ -->
-<section id="publications">
-<div class="wrap">
-  <div class="s-label reveal">
-    <span class="s-label__n">04.</span>
-    <h2 class="s-label__t">Publications</h2>
-  </div>
-
-  <div class="pub-list">
-
-    <div class="pub-item reveal">
-      <div class="pub-item__row">
-        <span class="pub-item__year">2025</span>
-        <span class="pub-item__title">[Paper title — add here]</span>
-        <span class="pub-item__type">Working Paper</span>
-      </div>
-      <p class="pub-item__venue">[Venue / Conference / Journal]</p>
-      <div class="pub-abstract">
-        <p class="pub-abstract__text">[Abstract — add here. A brief summary of the paper's research question, methodology, and key finding.]</p>
-      </div>
-      <button class="pub-toggle" onclick="togglePub(this)">
-        <span class="pub-toggle__icon">+</span>
-        <span>Abstract</span>
-      </button>
-    </div>
-
-    <div class="pub-item reveal">
-      <div class="pub-item__row">
-        <span class="pub-item__year">2024</span>
-        <span class="pub-item__title">[Paper title — add here]</span>
-        <span class="pub-item__type">Conference Paper</span>
-      </div>
-      <p class="pub-item__venue">[Venue / Conference / Journal]</p>
-      <div class="pub-abstract">
-        <p class="pub-abstract__text">[Abstract — add here.]</p>
-      </div>
-      <button class="pub-toggle" onclick="togglePub(this)">
-        <span class="pub-toggle__icon">+</span>
-        <span>Abstract</span>
-      </button>
-    </div>
-
-  </div>
-</div>
-</section>
-
-<div class="wrap">
-<!-- ════════════════════════════════════════════
-     SKILLS
-════════════════════════════════════════════ -->
+<!-- ════ SKILLS ════ -->
 <section id="skills">
-  <div class="s-label reveal">
-    <span class="s-label__n">05.</span>
-    <h2 class="s-label__t">Technical Skills</h2>
+  <div class="sh reveal">
+    <span class="sh__n">03.</span>
+    <h2 class="sh__t">Skills</h2>
   </div>
-
-  <p class="skills-note reveal">
-    These tools form a connected research stack — frontend frameworks for building
-    experimental interfaces, statistical environments for analyzing behavioral data,
-    and visualization libraries for communicating findings.
-  </p>
-
-  <div class="reveal">
-    <div class="skill-group">
-      <p class="skill-group__k">Frontend</p>
-      <div class="skill-group__v">
-        <span class="sk-xl">React</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-lg">Next.js</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-md">Supabase</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-md">D3.js</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">TypeScript</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <p class="skill-group__k">Research &amp; Data</p>
-      <div class="skill-group__v">
+  <div class="sk-groups reveal">
+    <div>
+      <p class="sk-group__k">Data &amp; Research</p>
+      <div class="sk-group__v">
         <span class="sk-xl">R</span>
         <span class="sk-sep">/</span>
         <span class="sk-lg">Python</span>
         <span class="sk-sep">/</span>
         <span class="sk-md">ggplot2</span>
         <span class="sk-sep">/</span>
-        <span class="sk-sm">pandas</span>
-        <span class="sk-sep">/</span>
         <span class="sk-sm">tidyverse</span>
+        <span class="sk-sep">/</span>
+        <span class="sk-sm">pandas</span>
       </div>
     </div>
-
-    <div class="skill-group">
-      <p class="skill-group__k">Design &amp; Research Methods</p>
-      <div class="skill-group__v">
+    <div>
+      <p class="sk-group__k">Frontend &amp; Visualization</p>
+      <div class="sk-group__v">
+        <span class="sk-lg">React</span>
+        <span class="sk-sep">/</span>
+        <span class="sk-md">D3.js</span>
+        <span class="sk-sep">/</span>
+        <span class="sk-sm">HTML &amp; CSS</span>
+        <span class="sk-sep">/</span>
+        <span class="sk-sm">JavaScript</span>
+      </div>
+    </div>
+    <div>
+      <p class="sk-group__k">Design &amp; Methods</p>
+      <div class="sk-group__v">
         <span class="sk-md">Figma</span>
         <span class="sk-sep">/</span>
-        <span class="sk-md">User Testing</span>
+        <span class="sk-sm">User Testing</span>
         <span class="sk-sep">/</span>
         <span class="sk-sm">Usability Studies</span>
         <span class="sk-sep">/</span>
-        <span class="sk-sm">Behavioral Logging</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">Regulatory Analysis</span>
+        <span class="sk-sm">Survey Design</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════
-     CONTACT
-════════════════════════════════════════════ -->
+<!-- ════ CONTACT ════ -->
 <section id="contact">
   <p class="contact-pre reveal">Get in touch</p>
   <a href="mailto:your@email.com" class="contact-email reveal">your@email.com</a>
-  <div class="contact-socials reveal">
+  <div class="contact-links reveal">
     <a href="https://github.com/songjayu" target="_blank" rel="noopener">GitHub</a>
     <a href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noopener">LinkedIn</a>
   </div>
   <a href="#" class="btn-cv reveal">
-    <span>↓</span>
-    <span>Download CV</span>
+    <span>↓</span><span>Download CV</span>
   </a>
 </section>
+
 </div><!-- /wrap -->
 
-<!-- ── FOOTER ─────────────────────────────── -->
 <footer>
   <p>© 2025 Song Mingyeong</p>
   <p>HCI Research Lab · Political Science &amp; IR · Data Science</p>
 </footer>
 
 <script>
-  /* ── Smart nav ───────────────────────────── */
-  const nav   = document.getElementById('navbar');
-  let lastY   = 0;
+  /* Smart nav */
+  const nav = document.getElementById('nav');
+  let lastY = 0;
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    nav.classList.toggle('hidden',  y > lastY && y > 80);
-    nav.classList.toggle('bordered', y > 40);
+    if (y > lastY && y > 80) nav.classList.add('down'), nav.classList.remove('up');
+    else                      nav.classList.add('up'),  nav.classList.remove('down');
+    nav.classList.toggle('line', y > 40);
     lastY = y;
   }, { passive: true });
 
-  /* ── Reveal on scroll ────────────────────── */
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-  }, { threshold: 0.12 });
+  /* Reveal */
+  const obs = new IntersectionObserver(es =>
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }),
+  { threshold: .1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  /* ── Dark mode ───────────────────────────── */
+  /* Dark mode */
   function toggleTheme() {
-    const html = document.documentElement;
-    html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', html.dataset.theme);
+    const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+    localStorage.setItem('theme', t);
   }
-  (function() {
-    const saved = localStorage.getItem('theme');
-    if (saved) document.documentElement.dataset.theme = saved;
-    else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
-      document.documentElement.dataset.theme = 'dark';
+  (() => {
+    const s = localStorage.getItem('theme') ||
+      (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+    document.documentElement.dataset.theme = s;
   })();
 
-  /* ── Publication accordion ───────────────── */
-  function togglePub(btn) {
-    const item = btn.closest('.pub-item');
-    item.classList.toggle('open');
-  }
-
-  /* ── Cookie banner ───────────────────────── */
+  /* Cookie */
   function closeCookie() {
     document.getElementById('cookie').classList.add('hidden');
-    localStorage.setItem('cookie-seen', '1');
+    localStorage.setItem('cookie', '1');
   }
-  if (localStorage.getItem('cookie-seen')) {
-    document.getElementById('cookie').classList.add('hidden');
-  }
+  if (localStorage.getItem('cookie')) document.getElementById('cookie').classList.add('hidden');
 </script>
-
 </body>
 </html>
