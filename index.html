@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MinKyung Song</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── Reset ─────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ─── Tokens ─────────────────────────────── */
+      :root {
+        --cream: #faf8f4;
+        --warm-white: #f5f2ec;
+        --text-dark: #2c2825;
+        --text-mid: #5c5550;
+        --text-light: #9c9490;
+        --accent: #b8956a;
+        --accent-soft: #d4b896;
+        --line: #e8e4dc;
+        --gap: 140px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--cream);
+        color: var(--text-dark);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      /* ─── Nav ────────────────────────────────── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 28px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(250, 248, 244, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.3s;
+      }
+      nav.scrolled {
+        border-bottom-color: var(--line);
+      }
+
+      .nav-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        color: var(--text-dark);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 40px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-mid);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text-dark);
+      }
+
+      /* ─── Layout shell ───────────────────────── */
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+
+      /* ─── Hero ───────────────────────────────── */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 100px;
+        max-width: 900px;
+        margin: 0 auto;
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      .hero-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 20px;
+      }
+
+      .hero-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3.8rem, 8.5vw, 7.5rem);
+        font-weight: 300;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        margin-bottom: 36px;
+      }
+      .hero-name em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .hero-desc {
+        max-width: 520px;
+        font-size: 0.95rem;
+        color: var(--text-mid);
+        line-height: 1.9;
+        margin-bottom: 52px;
+      }
+
+      .hero-meta {
+        display: flex;
+        gap: 48px;
+        padding-top: 32px;
+        border-top: 1px solid var(--line);
+      }
+
+      .hero-meta-item {
+        font-size: 0.85rem;
+        color: var(--text-dark);
+      }
+      .hero-meta-item span {
+        display: block;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-light);
+        margin-bottom: 5px;
+      }
+
+      /* ─── Section wrapper ────────────────────── */
+      .section-wrap {
+        padding-top: var(--gap);
+        padding-bottom: var(--gap);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        margin-bottom: 64px;
+      }
+      .section-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.95rem;
+        color: var(--accent);
+        font-style: italic;
+      }
+      .section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.5rem;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      /* ─── About ──────────────────────────────── */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 80px;
+        align-items: start;
+      }
+
+      .about-left h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.45rem;
+        font-weight: 500;
+        line-height: 1.45;
+        margin-bottom: 20px;
+      }
+      .about-left p {
+        font-size: 0.875rem;
+        color: var(--text-mid);
+        line-height: 1.9;
+      }
+
+      .about-right p {
+        font-size: 0.925rem;
+        color: var(--text-mid);
+        line-height: 2;
+        margin-bottom: 18px;
+      }
+
+      .about-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 36px;
+      }
+      .tag {
+        padding: 5px 15px;
+        border: 1px solid var(--accent-soft);
+        border-radius: 100px;
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        color: var(--accent);
+      }
+
+      /* ─── Research ───────────────────────────── */
+      .research-list {
+        border-top: 1px solid var(--line);
+      }
+
+      .research-item {
+        padding: 44px 0;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+
+      .research-year {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-light);
+        margin-bottom: 10px;
+      }
+      .research-type {
+        font-size: 0.72rem;
+        padding: 3px 10px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        display: inline-block;
+        color: var(--text-mid);
+      }
+
+      .research-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.55rem;
+        font-weight: 400;
+        line-height: 1.35;
+        margin-bottom: 14px;
+        transition: color 0.2s;
+      }
+      .research-item:hover .research-title {
+        color: var(--accent);
+      }
+
+      .research-desc {
+        font-size: 0.875rem;
+        color: var(--text-mid);
+        line-height: 1.85;
+      }
+
+      .research-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 18px;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+      .research-link:hover {
+        border-bottom-color: var(--accent);
+      }
+
+      /* ─── Contact ────────────────────────────── */
+      .contact-inner {
+        padding: 80px 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .contact-headline {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 300;
+        line-height: 1.2;
+        margin-bottom: 56px;
+        max-width: 480px;
+      }
+      .contact-headline em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .contact-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px 0;
+        border-top: 1px solid var(--line);
+        text-decoration: none;
+        color: var(--text-dark);
+        transition: color 0.2s;
+      }
+      .contact-link:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .contact-link:hover {
+        color: var(--accent);
+      }
+
+      .contact-link-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-light);
+        min-width: 80px;
+      }
+      .contact-link-value {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.25rem;
+        flex: 1;
+        padding: 0 20px;
+      }
+      .arrow {
+        font-size: 1rem;
+        transition: transform 0.2s;
+      }
+      .contact-link:hover .arrow {
+        transform: translate(3px, -3px);
+      }
+
+      /* ─── Footer ─────────────────────────────── */
+      footer {
+        text-align: center;
+        padding: 44px 40px;
+        font-size: 0.72rem;
+        color: var(--text-light);
+        letter-spacing: 0.06em;
+      }
+
+      /* ─── Responsive ─────────────────────────── */
+      @media (max-width: 720px) {
+        nav {
+          padding: 20px 24px;
+        }
+        .nav-links {
+          gap: 24px;
+        }
+        #hero,
+        .container {
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+        .hero-meta {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .research-item {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav id="navbar">
+      <a href="#hero" class="nav-name">MinKyung Song</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- ── Hero ── -->
+    <section id="hero">
+      <p class="hero-label">HCI Researcher &amp; Frontend Developer</p>
+      <h1 class="hero-name">
+        MinKyung<br />
+        <em>Song.</em>
+      </h1>
+      <p class="hero-desc">
+        Studying how interface design shapes human cognition and
+        decision-making. I work at the intersection of political systems, data
+        science, and user experience to ask questions about control, consent,
+        and responsibility in digital spaces.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span>Affiliation</span>
+          HCI Research Lab
+        </div>
+        <div class="hero-meta-item">
+          <span>Major</span>
+          Political Science &amp; IR
+        </div>
+        <div class="hero-meta-item">
+          <span>Track</span>
+          Data Science
+        </div>
+      </div>
+    </section>
+
+    <!-- ── About ── -->
+    <div class="container">
+      <section id="about">
+        <div class="section-wrap">
+          <div class="section-header">
+            <span class="section-num">01.</span>
+            <h2 class="section-title">About</h2>
+          </div>
+          <div class="about-grid">
+            <div class="about-left">
+              <h3>Where politics meets<br />interface design.</h3>
+              <p>
+                My academic path crosses disciplines that are rarely in
+                conversation with each other — and that tension is exactly what
+                interests me.
+              </p>
+            </div>
+            <div class="about-right">
+              <p>
+                I came to HCI research through a question I kept encountering in
+                political science: how do systems design compliance? The more I
+                studied political institutions, the more I noticed that digital
+                interfaces operated on similar logics — structuring choice,
+                diffusing responsibility, manufacturing consent.
+              </p>
+              <p>
+                My research investigates these dynamics at a granular level:
+                cookie consent banners that offer the illusion of choice, AI
+                systems that shift moral accountability away from the human,
+                sustainability features designed to produce engagement fatigue
+                rather than action.
+              </p>
+              <div class="about-tags">
+                <span class="tag">Privacy UX</span>
+                <span class="tag">Behavioral Interface Design</span>
+                <span class="tag">Human-AI Alignment</span>
+                <span class="tag">Illusion of Control</span>
+                <span class="tag">React</span>
+                <span class="tag">D3.js</span>
+                <span class="tag">Python</span>
+                <span class="tag">R</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Research ── -->
+      <section id="research">
+        <div class="section-wrap">
+          <div class="section-header">
+            <span class="section-num">02.</span>
+            <h2 class="section-title">Research</h2>
+          </div>
+          <div class="research-list">
+            <div class="research-item">
+              <div class="research-meta">
+                <div class="research-year">2024 – 2025</div>
+                <div class="research-type">HCI Research</div>
+              </div>
+              <div>
+                <h3 class="research-title">
+                  Cookie Consent as Performance: Autonomy, Dark Patterns, and
+                  the Limits of Notice
+                </h3>
+                <p class="research-desc">
+                  An empirical study examining how cookie consent interfaces are
+                  designed to produce the appearance of user control while
+                  systematically directing behavior toward data collection.
+                  Draws on regulatory frameworks and user testing with 40+
+                  participants.
+                </p>
+                <a href="#" class="research-link"
+                  >View Project <span class="arrow">↗</span></a
+                >
+              </div>
+            </div>
+
+            <div class="research-item">
+              <div class="research-meta">
+                <div class="research-year">2025</div>
+                <div class="research-type">Interface Study</div>
+              </div>
+              <div>
+                <h3 class="research-title">
+                  The Illusion of Control: How UI Affordances Construct False
+                  Agency
+                </h3>
+                <p class="research-desc">
+                  Investigates the mechanisms by which interface design creates
+                  perceived control that does not correspond to actual influence
+                  over system behavior. Explores implications for AI-mediated
+                  systems and algorithmic feeds.
+                </p>
+                <a href="#" class="research-link"
+                  >View Project <span class="arrow">↗</span></a
+                >
+              </div>
+            </div>
+
+            <div class="research-item">
+              <div class="research-meta">
+                <div class="research-year">2025</div>
+                <div class="research-type">Ongoing</div>
+              </div>
+              <div>
+                <h3 class="research-title">
+                  Sustainability Fatigue by Design: When Eco-UX Undermines
+                  Behavioral Change
+                </h3>
+                <p class="research-desc">
+                  Explores how sustainability-focused interface features can
+                  produce decision fatigue and disengagement rather than
+                  sustained behavioral change — with focus on the structural
+                  role of interface friction and emotional tone in environmental
+                  communication.
+                </p>
+                <a href="#" class="research-link"
+                  >View Project <span class="arrow">↗</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Contact ── -->
+      <section id="contact">
+        <div class="section-wrap">
+          <div class="section-header">
+            <span class="section-num">03.</span>
+            <h2 class="section-title">Contact</h2>
+          </div>
+          <div class="contact-inner">
+            <h3 class="contact-headline">
+              Let's talk about<br />
+              <em>design, research,</em><br />
+              or ideas.
+            </h3>
+            <div>
+              <a href="mailto:your@email.com" class="contact-link">
+                <span class="contact-link-label">Email</span>
+                <span class="contact-link-value">your@email.com</span>
+                <span class="arrow">↗</span>
+              </a>
+              <a
+                href="https://github.com/songjayu"
+                target="_blank"
+                rel="noopener"
+                class="contact-link"
+              >
+                <span class="contact-link-label">GitHub</span>
+                <span class="contact-link-value">github.com/songjayu</span>
+                <span class="arrow">↗</span>
+              </a>
+              <a
+                href="https://linkedin.com/in/your-linkedin"
+                target="_blank"
+                rel="noopener"
+                class="contact-link"
+              >
+                <span class="contact-link-label">LinkedIn</span>
+                <span class="contact-link-value"
+                  >linkedin.com/in/your-linkedin</span
+                >
+                <span class="arrow">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 MinKyung Song</p>
+    </footer>
+
+    <script>
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 40);
+      });
+    </script>
+  </body>
+</html>
