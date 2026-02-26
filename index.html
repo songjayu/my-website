@@ -1,578 +1,1171 @@
 <!doctype html>
 <html lang="en" data-theme="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Song Mingyeong</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Song Mingyeong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Raleway:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─ TOKENS ─────────────────────────────── */
+      :root {
+        --paper: #f8f7f3;
+        --taupe: #eae7df;
+        --dark: #27241f;
+        --mid: #5a5650;
+        --muted: #9a9690;
+        --sage: #9fb59b;
+        --mauve: #b9a3b1;
+        --line: #d8d4cb;
+        --serif: "Cormorant Garamond", Georgia, serif;
+        --sans: "Raleway", sans-serif;
+        --mono: "IBM Plex Mono", monospace;
+        --ease: cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      [data-theme="dark"] {
+        --paper: #1a1917;
+        --taupe: #222019;
+        --dark: #eae5d8;
+        --mid: #a8a49c;
+        --muted: #66625c;
+        --line: #2c2a25;
+      }
 
-  <style>
-    /* ── TOKENS ─────────────────────────────── */
-    :root {
-      --paper:    #F9F9F7;
-      --taupe:    #EDEBE4;
-      --charcoal: #2E2B28;
-      --mid:      #5C5852;
-      --light:    #9C9892;
-      --sage:     #A5B3A1;
-      --mauve:    #BFA7B4;
-      --line:     #DDD9D0;
-      --serif:    'Cormorant Garamond', Georgia, serif;
-      --sans:     'Raleway', sans-serif;
-      --mono:     'IBM Plex Mono', monospace;
-      --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    [data-theme="dark"] {
-      --paper:    #1B1A17;
-      --taupe:    #242320;
-      --charcoal: #EDE8DE;
-      --mid:      #B0AA9E;
-      --light:    #6A6460;
-      --line:     #2E2C28;
-    }
+      /* ─ RESET ──────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--sans);
+        background: var(--paper);
+        color: var(--dark);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        transition:
+          background 0.45s var(--ease),
+          color 0.45s var(--ease);
+      }
 
-    /* ── RESET ───────────────────────────────── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--sans);
-      background: var(--paper);
-      color: var(--charcoal);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      transition: background .4s var(--ease), color .4s var(--ease);
-    }
-    /* Grain */
-    body::after {
-      content: ''; position: fixed; inset: 0; z-index: 9000; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-      opacity: .038;
-    }
+      /* Grain */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9000;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        opacity: 0.036;
+      }
 
-    /* ── NAV ─────────────────────────────────── */
-    #nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      padding: 22px 60px;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(249, 249, 247, .92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid transparent;
-      transition: transform .4s var(--ease), border-color .3s, background .4s;
-    }
-    [data-theme="dark"] #nav { background: rgba(27, 26, 23, .92); }
-    #nav.up   { transform: translateY(0); }
-    #nav.down { transform: translateY(-100%); }
-    #nav.line { border-bottom-color: var(--line); }
+      /* ─ NAV ────────────────────────────────── */
+      #nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        padding: 20px 56px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(248, 247, 243, 0.9);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid transparent;
+        transition:
+          transform 0.4s var(--ease),
+          border-color 0.3s,
+          background 0.45s;
+      }
+      [data-theme="dark"] #nav {
+        background: rgba(26, 25, 23, 0.9);
+      }
+      #nav.hide {
+        transform: translateY(-100%);
+      }
+      #nav.ruled {
+        border-bottom-color: var(--line);
+      }
 
-    .nav-name {
-      font-family: var(--serif); font-size: 1rem; font-weight: 500;
-      letter-spacing: .06em; color: var(--charcoal); text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 32px; }
-    .nav-links  { display: flex; gap: 28px; list-style: none; }
-    .nav-links a {
-      font-size: .68rem; letter-spacing: .15em; text-transform: uppercase;
-      color: var(--mid); text-decoration: none; transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--charcoal); }
-    .btn-mode {
-      width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 50%;
-      background: none; cursor: pointer; color: var(--mid);
-      display: flex; align-items: center; justify-content: center;
-      transition: color .2s, border-color .2s;
-    }
-    .btn-mode:hover { color: var(--charcoal); border-color: var(--charcoal); }
-    .btn-mode svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
-    .i-sun  { display: none; }
-    [data-theme="dark"] .i-moon { display: none; }
-    [data-theme="dark"] .i-sun  { display: block; }
+      .nav-name {
+        font-family: var(--serif);
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        color: var(--dark);
+        text-decoration: none;
+      }
+      .nav-r {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--mid);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--dark);
+      }
 
-    /* ── LAYOUT ──────────────────────────────── */
-    .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px; }
+      .btn-t {
+        width: 28px;
+        height: 28px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: none;
+        cursor: pointer;
+        color: var(--mid);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .btn-t:hover {
+        color: var(--dark);
+        border-color: var(--dark);
+      }
+      .btn-t svg {
+        width: 12px;
+        height: 12px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+      .i-sun {
+        display: none;
+      }
+      [data-theme="dark"] .i-moon {
+        display: none;
+      }
+      [data-theme="dark"] .i-sun {
+        display: block;
+      }
 
-    /* ── REVEAL ──────────────────────────────── */
-    .reveal {
-      opacity: 0; transform: translateY(18px);
-      transition: opacity .75s var(--ease), transform .75s var(--ease);
-    }
-    .reveal.vis { opacity: 1; transform: none; }
+      /* ─ LAYOUT ─────────────────────────────── */
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 0 52px;
+      }
 
-    /* ── SECTION HEADER ──────────────────────── */
-    .sh { display: flex; align-items: baseline; gap: 14px; margin-bottom: 56px; }
-    .sh__n { font-family: var(--serif); font-size: .82rem; font-style: italic; color: var(--sage); }
-    .sh__t { font-family: var(--serif); font-size: 2rem; font-weight: 400; letter-spacing: -.01em; }
+      /* ─ REVEAL ─────────────────────────────── */
+      .r {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 0.8s var(--ease),
+          transform 0.8s var(--ease);
+      }
+      .r.v {
+        opacity: 1;
+        transform: none;
+      }
+      .r[data-d="1"] {
+        transition-delay: 0.1s;
+      }
+      .r[data-d="2"] {
+        transition-delay: 0.2s;
+      }
+      .r[data-d="3"] {
+        transition-delay: 0.3s;
+      }
+      .r[data-d="4"] {
+        transition-delay: 0.4s;
+      }
 
-    /* ════════════════════════════
+      /* ════════════════════════════════════════
        HERO
-    ════════════════════════════ */
-    #hero {
-      min-height: 100svh;
-      display: grid; grid-template-columns: 5fr 7fr;
-      align-items: end;
-      padding: 0 48px 96px;
-      max-width: 900px; margin: 0 auto;
-    }
-    .hero-void { /* empty left */ }
-    .hero-body {}
+    ════════════════════════════════════════ */
+      #hero {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 52px 88px;
+        max-width: 920px;
+        margin: 0 auto;
+        position: relative;
+      }
 
-    .hero-eyebrow {
-      font-family: var(--mono); font-size: .62rem; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--sage); margin-bottom: 20px;
-    }
-    .hero-name {
-      font-family: var(--serif);
-      font-size: clamp(3rem, 7vw, 6.5rem);
-      font-weight: 300; line-height: 1; letter-spacing: -.025em;
-      margin-bottom: 32px;
-    }
-    .hero-name em { font-style: italic; color: var(--mauve); display: block; }
+      /* Decorative background orb */
+      #hero::after {
+        content: "";
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        right: -60px;
+        top: 50%;
+        transform: translateY(-55%);
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(159, 181, 155, 0.13) 0%,
+          rgba(185, 163, 177, 0.08) 45%,
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
 
-    .hero-desc {
-      max-width: 400px; font-size: .875rem; color: var(--mid); line-height: 1.9; margin-bottom: 44px;
-    }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
 
-    .hero-meta {
-      border-top: 1px solid var(--line); padding-top: 22px;
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-    }
-    .meta-item { }
-    .meta-item + .meta-item { border-left: 1px solid var(--line); padding-left: 18px; }
-    .meta-item__k {
-      font-family: var(--mono); font-size: .57rem; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--light); display: block; margin-bottom: 3px;
-    }
-    .meta-item__v { font-size: .77rem; color: var(--charcoal); }
+      .hero-tag {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--sage);
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .hero-tag::before {
+        content: "";
+        display: block;
+        width: 24px;
+        height: 1px;
+        background: var(--sage);
+      }
 
-    .scroll-line {
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
-      color: var(--light); position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
-    }
-    .scroll-line__bar {
-      width: 1px; height: 44px;
-      background: linear-gradient(to bottom, transparent, var(--line));
-      animation: sline 1.9s var(--ease) infinite;
-    }
-    .scroll-line__txt {
-      font-family: var(--mono); font-size: .52rem; letter-spacing: .2em;
-      text-transform: uppercase; writing-mode: vertical-lr;
-    }
-    @keyframes sline {
-      0%    { transform: scaleY(0); transform-origin: top; }
-      49%   { transform: scaleY(1); transform-origin: top; }
-      50%   { transform: scaleY(1); transform-origin: bottom; }
-      100%  { transform: scaleY(0); transform-origin: bottom; }
-    }
+      .hero-name {
+        font-family: var(--serif);
+        font-size: clamp(3.4rem, 8vw, 8rem);
+        font-weight: 300;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        margin-bottom: 40px;
+      }
+      .hero-name .first {
+        display: block;
+      }
+      .hero-name .last {
+        display: block;
+        font-style: italic;
+        color: var(--mauve);
+        padding-left: 0.1em;
+      }
 
-    /* ════════════════════════════
-       ABOUT
-    ════════════════════════════ */
-    #about { border-top: 1px solid var(--line); padding: clamp(80px, 12vw, 160px) 0; }
+      .hero-desc {
+        max-width: 480px;
+        font-size: 0.875rem;
+        color: var(--mid);
+        line-height: 1.95;
+        margin-bottom: 52px;
+      }
+      .hero-desc em {
+        font-style: normal;
+        color: var(--dark);
+        font-weight: 500;
+      }
 
-    .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 72px; align-items: start; }
-    .about-left h3 {
-      font-family: var(--serif); font-size: 1.4rem; font-weight: 500;
-      line-height: 1.4; margin-bottom: 14px;
-    }
-    .about-left p { font-size: .83rem; color: var(--mid); line-height: 1.9; }
-    .about-right p { font-size: .875rem; color: var(--mid); line-height: 2; margin-bottom: 16px; }
+      .hero-bottom {
+        border-top: 1px solid var(--line);
+        padding-top: 22px;
+        display: flex;
+        gap: 0;
+        align-items: start;
+      }
+      .hb-item {
+        padding-right: 36px;
+      }
+      .hb-item + .hb-item {
+        border-left: 1px solid var(--line);
+        padding-left: 28px;
+      }
+      .hb-k {
+        font-family: var(--mono);
+        font-size: 0.55rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 3px;
+      }
+      .hb-v {
+        font-size: 0.77rem;
+        color: var(--dark);
+      }
 
-    /* ════════════════════════════
+      /* Scroll hint */
+      .hint {
+        position: absolute;
+        bottom: 32px;
+        right: 52px;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+      }
+      .hint__text {
+        font-family: var(--mono);
+        font-size: 0.55rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        writing-mode: vertical-lr;
+      }
+      .hint__track {
+        width: 1px;
+        height: 52px;
+        background: linear-gradient(to bottom, transparent, var(--line));
+        overflow: hidden;
+        position: relative;
+      }
+      .hint__track::after {
+        content: "";
+        position: absolute;
+        top: -52px;
+        left: 0;
+        width: 1px;
+        height: 52px;
+        background: var(--muted);
+        animation: track 2s var(--ease) infinite;
+      }
+      @keyframes track {
+        0% {
+          top: -52px;
+        }
+        100% {
+          top: 52px;
+        }
+      }
+
+      /* ════════════════════════════════════════
+       ABOUT  (taupe band)
+    ════════════════════════════════════════ */
+      #about {
+        background: var(--taupe);
+        margin: 0 -9999px;
+        padding: clamp(80px, 10vw, 140px) 9999px;
+        transition: background 0.45s;
+      }
+
+      .about-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 0 52px;
+        display: grid;
+        grid-template-columns: 1fr 1.7fr;
+        gap: 80px;
+        align-items: start;
+      }
+      .about-lft {
+      }
+      .about-lft__kicker {
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      .about-lft__title {
+        font-family: var(--serif);
+        font-size: 1.7rem;
+        font-weight: 400;
+        line-height: 1.35;
+      }
+      .about-lft__title em {
+        font-style: italic;
+        color: var(--mauve);
+      }
+
+      .about-rgt p {
+        font-size: 0.875rem;
+        color: var(--mid);
+        line-height: 2;
+        margin-bottom: 18px;
+      }
+      .about-rgt p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ════════════════════════════════════════
        INTERESTS
-    ════════════════════════════ */
-    #interests { border-top: 1px solid var(--line); padding: clamp(80px, 12vw, 160px) 0; }
+    ════════════════════════════════════════ */
+      #interests {
+        padding: clamp(80px, 10vw, 140px) 0;
+      }
 
-    .int-list { border-top: 1px solid var(--line); }
-    .int-row {
-      display: grid; grid-template-columns: 48px 1fr; gap: 36px;
-      padding: 32px 0; border-bottom: 1px solid var(--line);
-      transition: opacity .2s;
-    }
-    .int-list:hover .int-row       { opacity: .35; }
-    .int-list:hover .int-row:hover { opacity: 1; }
-    .int-row__n {
-      font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; color: var(--light); padding-top: 7px;
-    }
-    .int-row__title {
-      font-family: var(--serif); font-size: clamp(1.4rem, 2.6vw, 2rem);
-      font-weight: 400; line-height: 1.2; margin-bottom: 8px;
-    }
-    .int-row__desc { font-size: .81rem; color: var(--mid); line-height: 1.85; max-width: 480px; }
+      .sec-head {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 56px;
+      }
+      .sec-head__n {
+        font-family: var(--serif);
+        font-size: 0.82rem;
+        font-style: italic;
+        color: var(--sage);
+      }
+      .sec-head__t {
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
 
-    /* ════════════════════════════
+      .int-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+      .int-cell {
+        padding: 36px 32px;
+        border-bottom: 1px solid var(--line);
+        border-right: 1px solid var(--line);
+        position: relative;
+        overflow: hidden;
+        transition: background 0.3s var(--ease);
+      }
+      .int-cell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(159, 181, 155, 0.08),
+          rgba(185, 163, 177, 0.06)
+        );
+        opacity: 0;
+        transition: opacity 0.35s var(--ease);
+      }
+      .int-cell:hover::before {
+        opacity: 1;
+      }
+      .int-cell:hover .int-cell__n {
+        color: var(--sage);
+      }
+
+      .int-cell__n {
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        margin-bottom: 12px;
+        transition: color 0.3s;
+      }
+      .int-cell__title {
+        font-family: var(--serif);
+        font-size: 1.35rem;
+        font-weight: 400;
+        line-height: 1.25;
+        margin-bottom: 10px;
+      }
+      .int-cell__desc {
+        font-size: 0.78rem;
+        color: var(--mid);
+        line-height: 1.85;
+      }
+
+      /* 5th item full width */
+      .int-cell--full {
+        grid-column: 1/-1;
+      }
+      .int-cell--full .int-cell__title {
+        font-size: 1.7rem;
+      }
+
+      /* ════════════════════════════════════════
        SKILLS
-    ════════════════════════════ */
-    #skills { border-top: 1px solid var(--line); padding: clamp(80px, 12vw, 160px) 0; }
+    ════════════════════════════════════════ */
+      #skills {
+        padding: clamp(80px, 10vw, 140px) 0;
+        border-top: 1px solid var(--line);
+      }
 
-    .sk-groups { display: flex; flex-direction: column; gap: 36px; }
-    .sk-group__k {
-      font-family: var(--mono); font-size: .57rem; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--light); margin-bottom: 14px;
-    }
-    .sk-group__v {
-      display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 2px; line-height: 1.1;
-    }
-    .sk-xl { font-family: var(--serif); font-size: 2.6rem; font-weight: 300; color: var(--charcoal); }
-    .sk-lg { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; color: var(--charcoal); }
-    .sk-md { font-family: var(--sans); font-size: 1rem; font-weight: 400; color: var(--mid); }
-    .sk-sm { font-family: var(--sans); font-size: .78rem; font-weight: 300; color: var(--light); }
-    .sk-sep { color: var(--line); margin: 0 6px; font-weight: 300; }
+      .sk-layout {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 64px;
+        align-items: start;
+      }
+      .sk-intro {
+        position: sticky;
+        top: 100px;
+      }
+      .sk-intro__kicker {
+        font-family: var(--mono);
+        font-size: 0.57rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .sk-intro__text {
+        font-family: var(--serif);
+        font-size: 1.55rem;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+      .sk-intro__text em {
+        font-style: italic;
+        color: var(--mauve);
+      }
 
-    /* ════════════════════════════
+      .sk-list {
+        display: flex;
+        flex-direction: column;
+      }
+      .sk-row {
+        padding: 28px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .sk-row:first-child {
+        border-top: 1px solid var(--line);
+      }
+      .sk-row__k {
+        font-family: var(--mono);
+        font-size: 0.55rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .sk-row__v {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 0;
+        line-height: 1.1;
+      }
+      .sk-xl {
+        font-family: var(--serif);
+        font-size: 2.8rem;
+        font-weight: 300;
+        color: var(--dark);
+      }
+      .sk-lg {
+        font-family: var(--serif);
+        font-size: 1.9rem;
+        font-weight: 300;
+        color: var(--dark);
+      }
+      .sk-md {
+        font-family: var(--sans);
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--mid);
+      }
+      .sk-sm {
+        font-family: var(--sans);
+        font-size: 0.78rem;
+        font-weight: 300;
+        color: var(--muted);
+      }
+      .sk-s {
+        color: var(--line);
+        margin: 0 8px;
+        font-size: 0.85rem;
+      }
+
+      /* ════════════════════════════════════════
        CONTACT
-    ════════════════════════════ */
-    #contact {
-      border-top: 1px solid var(--line);
-      padding: clamp(80px, 12vw, 160px) 0 clamp(100px, 15vw, 200px);
-      text-align: center;
-    }
-    .contact-pre {
-      font-family: var(--mono); font-size: .58rem; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--light); margin-bottom: 28px;
-    }
-    .contact-email {
-      display: inline-block;
-      font-family: var(--serif); font-size: clamp(1.8rem, 5vw, 4.5rem);
-      font-weight: 300; letter-spacing: -.02em; color: var(--charcoal);
-      text-decoration: none; line-height: 1; margin-bottom: 40px; position: relative;
-    }
-    .contact-email::after {
-      content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px;
-      background: var(--charcoal);
-      transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease);
-    }
-    .contact-email:hover::after { transform: scaleX(1); transform-origin: left; }
+    ════════════════════════════════════════ */
+      #contact {
+        border-top: 1px solid var(--line);
+        padding: clamp(80px, 10vw, 140px) 0 clamp(100px, 14vw, 180px);
+      }
+      .contact-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
 
-    .contact-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; }
-    .contact-links a {
-      font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--mid); text-decoration: none; transition: color .2s;
-    }
-    .contact-links a:hover { color: var(--charcoal); }
+      .contact-lft {
+      }
+      .contact-lft__kicker {
+        font-family: var(--mono);
+        font-size: 0.57rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      .contact-lft__line {
+        font-family: var(--serif);
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
+        font-weight: 300;
+        line-height: 1.2;
+        margin-bottom: 36px;
+      }
+      .contact-lft__line em {
+        font-style: italic;
+        color: var(--mauve);
+        display: block;
+      }
 
-    .btn-cv {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--charcoal); text-decoration: none;
-      border: 1px solid var(--line); padding: 11px 26px; border-radius: 1px;
-      transition: border-color .2s;
-    }
-    .btn-cv:hover { border-color: var(--charcoal); }
+      .contact-email {
+        display: block;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        color: var(--dark);
+        text-decoration: none;
+        margin-bottom: 28px;
+        position: relative;
+        width: fit-content;
+      }
+      .contact-email::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--dark);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s var(--ease);
+      }
+      .contact-email:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
 
-    /* ── FOOTER ──────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--line); padding: 26px 48px;
-      display: flex; justify-content: space-between; align-items: center;
-      max-width: 900px; margin: 0 auto;
-    }
-    footer p { font-family: var(--mono); font-size: .58rem; letter-spacing: .08em; color: var(--light); }
+      .contact-socials {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .contact-socials a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mid);
+        text-decoration: none;
+        transition: color 0.2s;
+        width: fit-content;
+      }
+      .contact-socials a::before {
+        content: "";
+        display: block;
+        width: 14px;
+        height: 1px;
+        background: currentColor;
+      }
+      .contact-socials a:hover {
+        color: var(--dark);
+      }
 
-    /* ── COOKIE ──────────────────────────────── */
-    #cookie {
-      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-      z-index: 8000; background: var(--paper); border: 1px solid var(--line);
-      border-radius: 2px; padding: 18px 20px; max-width: 440px; width: calc(100% - 36px);
-      box-shadow: 0 4px 18px rgba(0,0,0,.05); transition: background .4s;
-    }
-    #cookie.hidden { display: none; }
-    .cookie-title { font-family: var(--serif); font-size: .9rem; font-weight: 500; margin-bottom: 6px; }
-    .cookie-text  { font-size: .74rem; color: var(--mid); line-height: 1.65; margin-bottom: 12px; }
-    .cookie-row   { display: flex; gap: 9px; }
-    .cbtn {
-      font-family: var(--mono); font-size: .56rem; letter-spacing: .12em; text-transform: uppercase;
-      padding: 7px 16px; border-radius: 1px; cursor: pointer; transition: all .2s;
-    }
-    .cbtn--ok { background: var(--charcoal); color: var(--paper); border: 1px solid var(--charcoal); }
-    .cbtn--ok:hover { opacity: .82; }
-    .cbtn--no { background: none; color: var(--mid); border: 1px solid var(--line); }
-    .cbtn--no:hover { border-color: var(--mid); color: var(--charcoal); }
+      .contact-rgt {
+      }
+      .contact-cv {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--dark);
+        text-decoration: none;
+        border: 1px solid var(--line);
+        padding: 13px 28px;
+        border-radius: 1px;
+        transition:
+          border-color 0.2s,
+          background 0.2s,
+          color 0.2s;
+        margin-bottom: 28px;
+      }
+      .contact-cv:hover {
+        border-color: var(--dark);
+        background: var(--dark);
+        color: var(--paper);
+      }
 
-    /* ── RESPONSIVE ──────────────────────────── */
-    @media (max-width: 720px) {
-      #nav  { padding: 18px 20px; }
-      .nav-links { gap: 16px; }
-      .wrap, #hero, footer { padding-left: 22px; padding-right: 22px; }
-      #hero { grid-template-columns: 1fr; padding-top: 96px; }
-      .hero-meta { grid-template-columns: 1fr; gap: 14px; }
-      .meta-item + .meta-item { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 12px; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .int-row { grid-template-columns: 32px 1fr; gap: 16px; }
-    }
-  </style>
-</head>
-<body>
+      .contact-note {
+        font-size: 0.76rem;
+        color: var(--muted);
+        line-height: 1.8;
+        max-width: 280px;
+      }
+      .contact-note em {
+        font-style: normal;
+        color: var(--mid);
+      }
 
-<!-- COOKIE -->
-<div id="cookie">
-  <p class="cookie-title">On data collection</p>
-  <p class="cookie-text">No tracking cookies. Only essential functionality is active.</p>
-  <div class="cookie-row">
-    <button class="cbtn cbtn--ok" onclick="closeCookie()">Understood</button>
-    <button class="cbtn cbtn--no" onclick="closeCookie()">Dismiss</button>
-  </div>
-</div>
+      /* ─ FOOTER ──────────────────────────────── */
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 24px 52px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 920px;
+        margin: 0 auto;
+      }
+      footer p {
+        font-family: var(--mono);
+        font-size: 0.57rem;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#hero" class="nav-name">Song Mingyeong</a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#interests">Interests</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="btn-mode" onclick="toggleTheme()" aria-label="Toggle theme">
-      <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
-      <svg class="i-sun"  viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1"  x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22"   x2="5.64"  y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1"  y1="12" x2="3"  y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
-        <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
-      </svg>
-    </button>
-  </div>
-</nav>
+      /* ─ COOKIE ──────────────────────────────── */
+      #cookie {
+        position: fixed;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 8000;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        padding: 18px 20px;
+        max-width: 420px;
+        width: calc(100% - 36px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        transition: background 0.45s;
+      }
+      #cookie.gone {
+        display: none;
+      }
+      .ck-title {
+        font-family: var(--serif);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .ck-body {
+        font-size: 0.72rem;
+        color: var(--mid);
+        line-height: 1.65;
+        margin-bottom: 12px;
+      }
+      .ck-btns {
+        display: flex;
+        gap: 9px;
+      }
+      .ck-btn {
+        font-family: var(--mono);
+        font-size: 0.56rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 7px 16px;
+        border-radius: 1px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .ck-btn--y {
+        background: var(--dark);
+        color: var(--paper);
+        border: 1px solid var(--dark);
+      }
+      .ck-btn--y:hover {
+        opacity: 0.8;
+      }
+      .ck-btn--n {
+        background: none;
+        color: var(--mid);
+        border: 1px solid var(--line);
+      }
+      .ck-btn--n:hover {
+        border-color: var(--mid);
+      }
 
-<!-- ════ HERO ════ -->
-<section id="hero">
-  <div class="hero-void"></div>
-  <div class="hero-body">
-    <p class="hero-eyebrow">HCI Researcher</p>
-    <h1 class="hero-name">
-      Song<br>
-      <em>Mingyeong.</em>
-    </h1>
-    <p class="hero-desc">
-      Political Science &amp; International Relations × Data Science.<br>
-      Interested in how interfaces shape consent, agency, and human decision-making.
-    </p>
-    <div class="hero-meta">
-      <div class="meta-item">
-        <span class="meta-item__k">Affiliation</span>
-        <span class="meta-item__v">HCI Research Lab</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-item__k">Major</span>
-        <span class="meta-item__v">Political Science &amp; IR</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-item__k">2nd Major</span>
-        <span class="meta-item__v">Data Science</span>
-      </div>
-    </div>
-  </div>
-  <div class="scroll-line" aria-hidden="true">
-    <div class="scroll-line__bar"></div>
-    <span class="scroll-line__txt">scroll</span>
-  </div>
-</section>
-
-<div class="wrap">
-
-<!-- ════ ABOUT ════ -->
-<section id="about">
-  <div class="sh reveal">
-    <span class="sh__n">01.</span>
-    <h2 class="sh__t">About</h2>
-  </div>
-  <div class="about-grid">
-    <div class="about-left reveal">
-      <h3>Where politics meets<br>interface design.</h3>
-      <p>Studying at the intersection of social systems, data, and human-computer interaction.</p>
-    </div>
-    <div class="about-right reveal">
-      <p>
-        I came to HCI research through political science — specifically, how systems are designed
-        to shape behavior. Digital interfaces operate on similar logics: structuring choice,
-        diffusing responsibility, manufacturing consent.
+      /* ─ RESPONSIVE ──────────────────────────── */
+      @media (max-width: 720px) {
+        #nav {
+          padding: 16px 20px;
+        }
+        .nav-links {
+          gap: 14px;
+        }
+        .wrap,
+        #hero,
+        footer {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        #hero {
+          padding-bottom: 72px;
+        }
+        #hero::after {
+          display: none;
+        }
+        .hint {
+          display: none;
+        }
+        .about-inner {
+          grid-template-columns: 1fr;
+          gap: 36px;
+          padding: 0 20px;
+        }
+        .int-grid {
+          grid-template-columns: 1fr;
+        }
+        .int-cell--full {
+          grid-column: 1;
+        }
+        .sk-layout {
+          grid-template-columns: 1fr;
+        }
+        .sk-intro {
+          position: static;
+          margin-bottom: 36px;
+        }
+        .contact-inner {
+          grid-template-columns: 1fr;
+          gap: 44px;
+        }
+        .contact-rgt {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- COOKIE -->
+    <div id="cookie">
+      <p class="ck-title">On data collection</p>
+      <p class="ck-body">
+        This site uses no tracking cookies. Only what is necessary to function
+        is active.
       </p>
-      <p>
-        I'm currently affiliated with an HCI research lab, pursuing a double major
-        in Political Science &amp; International Relations and Data Science.
-        My research interests sit at the boundary of privacy, behavioral interface design,
-        and human-AI interaction.
-      </p>
+      <div class="ck-btns">
+        <button class="ck-btn ck-btn--y" onclick="ckClose()">Understood</button>
+        <button class="ck-btn ck-btn--n" onclick="ckClose()">Dismiss</button>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- ════ INTERESTS ════ -->
-<section id="interests">
-  <div class="sh reveal">
-    <span class="sh__n">02.</span>
-    <h2 class="sh__t">Research Interests</h2>
-  </div>
-  <div class="int-list">
+    <!-- NAV -->
+    <nav id="nav">
+      <a href="#hero" class="nav-name">Song Mingyeong</a>
+      <div class="nav-r">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#interests">Interests</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="btn-t" onclick="toggleDark()" aria-label="Toggle theme">
+          <svg class="i-moon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+          </svg>
+          <svg class="i-sun" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+        </button>
+      </div>
+    </nav>
 
-    <div class="int-row reveal">
-      <span class="int-row__n">01</span>
-      <div>
-        <h3 class="int-row__title">Privacy UX</h3>
-        <p class="int-row__desc">
-          Cookie consent interfaces, notice-and-choice models, and the conditions
-          under which users are guided to disclose more than intended.
+    <!-- ══ HERO ══ -->
+    <section id="hero">
+      <div class="hero-content">
+        <p class="hero-tag r">HCI Researcher</p>
+        <h1 class="hero-name r" data-d="1">
+          <span class="first">Song</span>
+          <span class="last">Mingyeong.</span>
+        </h1>
+        <p class="hero-desc r" data-d="2">
+          Studying the boundaries where <em>political systems</em> meet
+          interface design — how digital structures shape consent, agency, and
+          human decision-making.
         </p>
+        <div class="hero-bottom r" data-d="3">
+          <div class="hb-item">
+            <span class="hb-k">Affiliation</span>
+            <span class="hb-v">HCI Research Lab</span>
+          </div>
+          <div class="hb-item">
+            <span class="hb-k">Major</span>
+            <span class="hb-v">Political Science &amp; IR</span>
+          </div>
+          <div class="hb-item">
+            <span class="hb-k">2nd Major</span>
+            <span class="hb-v">Data Science</span>
+          </div>
+        </div>
+      </div>
+      <div class="hint" aria-hidden="true">
+        <span class="hint__text">scroll</span>
+        <div class="hint__track"></div>
+      </div>
+    </section>
+
+    <!-- ══ ABOUT ══ -->
+    <div id="about">
+      <div class="about-inner">
+        <div class="about-lft r">
+          <p class="about-lft__kicker">01. About</p>
+          <h2 class="about-lft__title">
+            Where politics<br />
+            meets <em>interface</em><br />
+            design.
+          </h2>
+        </div>
+        <div class="about-rgt r" data-d="1">
+          <p>
+            I came to HCI research through a question I kept encountering in
+            political science — how do systems design compliance? The more I
+            studied political institutions, the more I noticed that digital
+            interfaces operate on the same logic: structuring choice, diffusing
+            responsibility, manufacturing consent.
+          </p>
+          <p>
+            Currently affiliated with an HCI research lab, pursuing a double
+            major in Political Science &amp; International Relations and Data
+            Science. My research interests sit at the boundary of privacy UX,
+            behavioral interface design, and the ethics of AI-augmented decision
+            systems.
+          </p>
+        </div>
       </div>
     </div>
 
-    <div class="int-row reveal">
-      <span class="int-row__n">02</span>
-      <div>
-        <h3 class="int-row__title">Illusion of Control</h3>
-        <p class="int-row__desc">
-          How UI affordances manufacture perceived agency without granting
-          actual influence — in feeds, settings panels, and consent flows.
-        </p>
-      </div>
+    <!-- ══ INTERESTS ══ -->
+    <div class="wrap">
+      <section id="interests">
+        <div class="sec-head r">
+          <span class="sec-head__n">02.</span>
+          <h2 class="sec-head__t">Research Interests</h2>
+        </div>
+        <div class="int-grid">
+          <div class="int-cell r">
+            <p class="int-cell__n">01</p>
+            <h3 class="int-cell__title">Privacy UX</h3>
+            <p class="int-cell__desc">
+              Cookie consent interfaces, notice-and-choice models, and the
+              structural conditions under which users are guided to disclose
+              more than intended.
+            </p>
+          </div>
+
+          <div class="int-cell r" data-d="1">
+            <p class="int-cell__n">02</p>
+            <h3 class="int-cell__title">Illusion of Control</h3>
+            <p class="int-cell__desc">
+              How UI affordances manufacture perceived agency without granting
+              actual influence — in feeds, settings panels, and consent flows.
+            </p>
+          </div>
+
+          <div class="int-cell r" data-d="2">
+            <p class="int-cell__n">03</p>
+            <h3 class="int-cell__title">AI-Assisted Decision Making</h3>
+            <p class="int-cell__desc">
+              Interface design in AI-augmented systems, and how UI framing
+              shifts moral accountability between human and machine.
+            </p>
+          </div>
+
+          <div class="int-cell r" data-d="3">
+            <p class="int-cell__n">04</p>
+            <h3 class="int-cell__title">Human-AI Alignment</h3>
+            <p class="int-cell__desc">
+              How users form mental models of AI systems through interface
+              interaction — and where alignment between intent and behavior
+              breaks down.
+            </p>
+          </div>
+
+          <div class="int-cell int-cell--full r" data-d="4">
+            <p class="int-cell__n">05</p>
+            <h3 class="int-cell__title">Sustainability-Related UX Fatigue</h3>
+            <p class="int-cell__desc">
+              When eco-UX features produce disengagement rather than behavioral
+              change — the role of interface friction, emotional tone, and
+              decision load.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SKILLS ══ -->
+      <section id="skills">
+        <div class="sk-layout">
+          <div class="sk-intro r">
+            <p class="sk-intro__kicker">03. Skills</p>
+            <h2 class="sk-intro__text">
+              A connected<br />
+              <em>research stack.</em>
+            </h2>
+          </div>
+          <div class="sk-list">
+            <div class="sk-row r">
+              <p class="sk-row__k">Data &amp; Research</p>
+              <div class="sk-row__v">
+                <span class="sk-xl">R</span>
+                <span class="sk-s">/</span>
+                <span class="sk-lg">Python</span>
+                <span class="sk-s">/</span>
+                <span class="sk-md">ggplot2</span>
+                <span class="sk-s">/</span>
+                <span class="sk-sm">tidyverse</span>
+                <span class="sk-s">/</span>
+                <span class="sk-sm">pandas</span>
+              </div>
+            </div>
+
+            <div class="sk-row r" data-d="1">
+              <p class="sk-row__k">Frontend &amp; Visualization</p>
+              <div class="sk-row__v">
+                <span class="sk-lg">React</span>
+                <span class="sk-s">/</span>
+                <span class="sk-md">D3.js</span>
+                <span class="sk-s">/</span>
+                <span class="sk-sm">HTML &amp; CSS</span>
+                <span class="sk-s">/</span>
+                <span class="sk-sm">JavaScript</span>
+              </div>
+            </div>
+
+            <div class="sk-row r" data-d="2">
+              <p class="sk-row__k">Design &amp; Methods</p>
+              <div class="sk-row__v">
+                <span class="sk-md">Figma</span>
+                <span class="sk-s">/</span>
+                <span class="sk-sm">User Testing</span>
+                <span class="sk-s">/</span>
+                <span class="sk-sm">Usability Studies</span>
+                <span class="sk-s">/</span>
+                <span class="sk-sm">Survey Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ CONTACT ══ -->
+      <section id="contact">
+        <div class="contact-inner">
+          <div class="contact-lft r">
+            <p class="contact-lft__kicker">04. Contact</p>
+            <h2 class="contact-lft__line">
+              Let's talk about<br />
+              <em>design, research,<br />or ideas.</em>
+            </h2>
+            <a href="mailto:songjayuu@gmail.com" class="contact-email"
+              >songjayuu@gmail.com</a
+            >
+            <div class="contact-socials">
+              <a
+                href="https://github.com/songjayu"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+              <a
+                href="https://linkedin.com/in/your-linkedin"
+                target="_blank"
+                rel="noopener"
+                >LinkedIn</a
+              >
+            </div>
+          </div>
+          <div class="contact-rgt r" data-d="1">
+            <a href="#" class="contact-cv">
+              <span>↓</span><span>Download CV</span>
+            </a>
+            <p class="contact-note">
+              Currently based in <em>Yongin, South Korea.</em><br />
+              Open to research collaborations and academic conversations.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
+    <!-- /wrap -->
 
-    <div class="int-row reveal">
-      <span class="int-row__n">03</span>
-      <div>
-        <h3 class="int-row__title">AI-Assisted Decision Making</h3>
-        <p class="int-row__desc">
-          Interface design in AI-augmented systems, and how UI framing
-          shifts moral accountability between human and machine.
-        </p>
-      </div>
-    </div>
+    <footer>
+      <p>© 2025 Song Mingyeong</p>
+      <p>HCI Research Lab · Political Science &amp; IR · Data Science</p>
+    </footer>
 
-    <div class="int-row reveal">
-      <span class="int-row__n">04</span>
-      <div>
-        <h3 class="int-row__title">Human-AI Alignment</h3>
-        <p class="int-row__desc">
-          How users form mental models of AI systems through interface interaction —
-          and where alignment between intent and behavior breaks down.
-        </p>
-      </div>
-    </div>
+    <script>
+      /* Smart nav */
+      const nav = document.getElementById("nav");
+      let lastY = 0;
+      window.addEventListener(
+        "scroll",
+        () => {
+          const y = window.scrollY;
+          nav.classList.toggle("hide", y > lastY && y > 80);
+          nav.classList.toggle("ruled", y > 40);
+          lastY = y;
+        },
+        { passive: true },
+      );
 
-    <div class="int-row reveal">
-      <span class="int-row__n">05</span>
-      <div>
-        <h3 class="int-row__title">Sustainability-Related UX Fatigue</h3>
-        <p class="int-row__desc">
-          When eco-UX features produce disengagement rather than behavioral change,
-          and the role of interface friction and emotional tone.
-        </p>
-      </div>
-    </div>
+      /* Reveal */
+      const obs = new IntersectionObserver(
+        (es) =>
+          es.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("v");
+          }),
+        { threshold: 0.08 },
+      );
+      document.querySelectorAll(".r").forEach((el) => obs.observe(el));
 
-  </div>
-</section>
+      /* Dark mode */
+      function toggleDark() {
+        const t =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = t;
+        localStorage.setItem("t", t);
+      }
+      (() => {
+        const s =
+          localStorage.getItem("t") ||
+          (matchMedia("(prefers-color-scheme:dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.dataset.theme = s;
+      })();
 
-<!-- ════ SKILLS ════ -->
-<section id="skills">
-  <div class="sh reveal">
-    <span class="sh__n">03.</span>
-    <h2 class="sh__t">Skills</h2>
-  </div>
-  <div class="sk-groups reveal">
-    <div>
-      <p class="sk-group__k">Data &amp; Research</p>
-      <div class="sk-group__v">
-        <span class="sk-xl">R</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-lg">Python</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-md">ggplot2</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">tidyverse</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">pandas</span>
-      </div>
-    </div>
-    <div>
-      <p class="sk-group__k">Frontend &amp; Visualization</p>
-      <div class="sk-group__v">
-        <span class="sk-lg">React</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-md">D3.js</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">HTML &amp; CSS</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">JavaScript</span>
-      </div>
-    </div>
-    <div>
-      <p class="sk-group__k">Design &amp; Methods</p>
-      <div class="sk-group__v">
-        <span class="sk-md">Figma</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">User Testing</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">Usability Studies</span>
-        <span class="sk-sep">/</span>
-        <span class="sk-sm">Survey Design</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════ CONTACT ════ -->
-<section id="contact">
-  <p class="contact-pre reveal">Get in touch</p>
-  <a href="mailto:your@email.com" class="contact-email reveal">your@email.com</a>
-  <div class="contact-links reveal">
-    <a href="https://github.com/songjayu" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noopener">LinkedIn</a>
-  </div>
-  <a href="#" class="btn-cv reveal">
-    <span>↓</span><span>Download CV</span>
-  </a>
-</section>
-
-</div><!-- /wrap -->
-
-<footer>
-  <p>© 2025 Song Mingyeong</p>
-  <p>HCI Research Lab · Political Science &amp; IR · Data Science</p>
-</footer>
-
-<script>
-  /* Smart nav */
-  const nav = document.getElementById('nav');
-  let lastY = 0;
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y > lastY && y > 80) nav.classList.add('down'), nav.classList.remove('up');
-    else                      nav.classList.add('up'),  nav.classList.remove('down');
-    nav.classList.toggle('line', y > 40);
-    lastY = y;
-  }, { passive: true });
-
-  /* Reveal */
-  const obs = new IntersectionObserver(es =>
-    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }),
-  { threshold: .1 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  /* Dark mode */
-  function toggleTheme() {
-    const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = t;
-    localStorage.setItem('theme', t);
-  }
-  (() => {
-    const s = localStorage.getItem('theme') ||
-      (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
-    document.documentElement.dataset.theme = s;
-  })();
-
-  /* Cookie */
-  function closeCookie() {
-    document.getElementById('cookie').classList.add('hidden');
-    localStorage.setItem('cookie', '1');
-  }
-  if (localStorage.getItem('cookie')) document.getElementById('cookie').classList.add('hidden');
-</script>
-</body>
+      /* Cookie */
+      function ckClose() {
+        document.getElementById("cookie").classList.add("gone");
+        localStorage.setItem("ck", "1");
+      }
+      if (localStorage.getItem("ck"))
+        document.getElementById("cookie").classList.add("gone");
+    </script>
+  </body>
 </html>
